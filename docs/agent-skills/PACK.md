@@ -27,7 +27,7 @@
 | `qa-pyramid-plan` | 100% пирамида: план + один ярус | 10 | [example](examples/multistack/qa-pyramid-plan/SKILL.md) |
 | `qa-run-stand` | прогон на pipeline / stage / prod | 10 | [example](examples/multistack/qa-run-stand/SKILL.md) |
 
-Домашка: пустой workspace → [один промпт](../../HOMEWORK.md) (`git clone` + compose + e2e). Не семь чатов.
+Домашка: форк `qa-guru/ai-first-student-workspace` → пустой workspace → [один промпт](../../HOMEWORK.md) (clone **форка** + compose + e2e). Не семь чатов.
 
 ## Rules (example)
 

@@ -2,10 +2,11 @@
 
 Учебный workspace курса **AI-first QA**: takeaway Java/Spring + React + Selenide, плюс rules / skills / RAG.
 
-Домашка одним запросом: [HOMEWORK.md](HOMEWORK.md)
+Домашка одним запросом: [HOMEWORK.md](HOMEWORK.md) — сначала **Fork**, потом clone своего форка.
 
 ```bash
-git clone https://github.com/qa-guru/ai-first-student-workspace.git
+# Fork на GitHub, затем:
+git clone https://github.com/<your-login>/ai-first-student-workspace.git
 cd ai-first-student-workspace
 docker compose up -d --build
 ```
