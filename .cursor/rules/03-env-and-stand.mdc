@@ -1,0 +1,24 @@
+---
+description: Stand and env — pipeline / stage / prod via -Denv, URLs from properties
+globs: "**/tests/**,**/build.gradle,**/config/*.properties"
+alwaysApply: false
+---
+
+# Стенд и env (pipeline / stage / prod)
+
+Тест пишется **стендо-агностично**. Стенд выбирает `-Denv=`, не код.
+
+| Слово | Takeaway | Когда |
+|-------|----------|--------|
+| pipeline (CI / локальный compose) | `-Denv=multistack_ci` | разработка, GHA, Jenkins |
+| stage | `-Denv=multistack_stage` | [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/) |
+| prod | `-Denv=multistack_prod` | [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) + Selenoid; креды хаба не в git |
+
+- Любой прогон — с `-Denv=`. URL не хардкодить в тестах.
+- Перед ci: `docker compose up -d --build`. Health: `curl -sf http://localhost:8800/api/health`. UI: `http://localhost:9821/` (не `:9811`).
+- Prod без рабочего `-DremoteUrl` — не гонять.
+- На prod: не деструктивные сценарии (delete/drop) без явного OK.
+- «Зелёный только на localhost» ≠ готово к merge.
+- Не удалять `build/allure-results` без OK.
+
+RAG: `docs/agent-skills/rag/cfg-stands.md`

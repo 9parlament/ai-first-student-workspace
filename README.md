@@ -1,0 +1,40 @@
+# ai-first-student-workspace
+
+Учебный workspace курса **AI-first QA**: takeaway Java/Spring + React + Selenide, плюс rules / skills / RAG.
+
+Домашка одним запросом: [HOMEWORK.md](HOMEWORK.md)
+
+```bash
+git clone https://github.com/qa-guru/ai-first-student-workspace.git
+cd ai-first-student-workspace
+docker compose up -d --build
+```
+
+| Role | Folder |
+|------|--------|
+| Backend | `backend-java-spring/` |
+| Frontend | `frontend-typescript-react/` (`vendor/` — запечённый design-system runtime) |
+| Tests | `tests-java-gradle-junit5-allure3-selenide/` |
+
+```bash
+curl -sf http://localhost:8800/api/health
+# UI same-origin (SPA + /api): http://localhost:9821/
+# UI container only:          http://localhost:9811/
+```
+
+Tests (gateway already up):
+
+```bash
+cd tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=multistack_ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+```
+
+CI: `.github/workflows/ci.yml` (SSOT in hub ethalon `_ethalon/singlestack_github.yml`).  
+Prod: [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) (`-Denv=multistack_prod`).  
+Stage: [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/) (`-Denv=multistack_stage`).
+
+Maintainers: refresh from the hub ethalon in the zero-design-system monorepo:
+
+```bash
+./generators/render/render.sh --preset singlestack
+```

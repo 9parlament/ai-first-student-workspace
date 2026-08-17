@@ -1,0 +1,45 @@
+---
+paths:
+  - "**/*Tests.java"
+  - "**/*Test.java"
+  - "**/tests/**"
+  - "**/build.gradle"
+---
+
+# takeaway — e2e / api defaults
+
+Модуль: `tests-java-gradle-junit5-allure3-selenide/`.
+
+## E2e (учебный smoke)
+
+```bash
+cd tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=multistack_ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+```
+
+- Нет task `testE2e`. Нет `@Tag("smoke")` — срез = `@Tag("e2e")`.
+- Не `./gradlew test` без `-DincludeTags` для задачи «smoke / e2e».
+- Всегда `-Denv=` (pipeline `multistack_ci` / stage / prod). URL не в тестах.
+
+## Один тест
+
+```bash
+./gradlew test -Denv=multistack_ci -DincludeTags=e2e -Dtest=HomeTests
+./gradlew test -Denv=multistack_ci -DincludeTags=e2e \
+  -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong
+```
+
+## API
+
+```bash
+./gradlew test -Denv=multistack_ci -DincludeTags=api
+```
+
+## Allure
+
+- Results: `tests-java-gradle-junit5-allure3-selenide/build/allure-results`
+- Report: `npx allure serve build/allure-results` (из модуля тестов, после `npm ci`)
+
+## Skills
+
+`docs/agent-skills/qa-smoke-debug/SKILL.md` и соседние skills в `docs/agent-skills/`.

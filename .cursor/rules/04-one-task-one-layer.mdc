@@ -1,0 +1,12 @@
+---
+description: One task — one layer; new chat after rule/skill change
+globs: "**/*Tests.java,**/pages/**"
+alwaysApply: false
+---
+
+# Один task — один ярус
+
+- Новый чат Cline / Cursor после смены rule или skill.
+- Одна задача = один `@Layer` или один тест. Не «почини всё».
+- Селекторы не трогать без triage (skill flaky / review).
+- API-контракт не закрывать новым e2e, если уже есть `tests/api`.
