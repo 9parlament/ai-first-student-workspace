@@ -19,7 +19,7 @@ related: [ci-gradle-args, cfg-stands, test-pyramid]
 backend-unit-tests → integration-tests → build-backend
 frontend-unit-tests ─┐
 tests-harness ───────┴→ ui-mock-tests → build-frontend
-tests-harness → api-tests-stage / api-tests (e2e следует за ними)
+tests-harness → api-tests-stage / api-tests / e2e-tests-stage / e2e-tests
 build-* → deploy-backend-stage / deploy-frontend-stage
   → api-tests-stage → e2e-tests-stage
   → deploy-backend / deploy-frontend → api-tests → e2e-tests

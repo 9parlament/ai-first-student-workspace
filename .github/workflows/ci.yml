@@ -10,7 +10,7 @@ name: CI
 #   backend-unit-tests → integration-tests → build-backend
 #   frontend-unit-tests ─┐
 #   tests-harness ───────┴→ ui-mock-tests → build-frontend
-#   tests-harness also gates api-tests-stage / api-tests (e2e follows those)
+#   tests-harness also gates api-tests-stage / api-tests / e2e-tests-stage / e2e-tests
 #   build-* → deploy-*-stage → api-tests-stage → e2e-tests-stage
 #   e2e-tests-stage → deploy-backend / deploy-frontend → api-tests → e2e-tests
 #   publish-allure-report
@@ -200,7 +200,7 @@ jobs:
           retention-days: 1
 
   tests-harness:
-    # testinfra/ (ConfigReader, CSS, Chrome pin) — gate for TESTS_DIR jobs, not a pyramid layer.
+    # testinfra/ (ConfigReader, CSS, Chrome pin) — gate for TESTS_DIR jobs (mock / api / e2e), not a pyramid layer.
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -460,8 +460,8 @@ jobs:
           retention-days: 1
 
   e2e-tests-stage:
-    needs: [deploy-frontend-stage, api-tests-stage]
-    if: always() && !cancelled() && needs.deploy-frontend-stage.result == 'success' && needs.api-tests-stage.result == 'success'
+    needs: [deploy-frontend-stage, api-tests-stage, tests-harness]
+    if: always() && !cancelled() && needs.tests-harness.result == 'success' && needs.deploy-frontend-stage.result == 'success' && needs.api-tests-stage.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     env:
@@ -669,8 +669,8 @@ jobs:
           retention-days: 1
 
   e2e-tests:
-    needs: [api-tests, deploy-frontend]
-    if: always() && !cancelled() && needs.deploy-frontend.result == 'success' && needs.api-tests.result == 'success'
+    needs: [api-tests, deploy-frontend, tests-harness]
+    if: always() && !cancelled() && needs.tests-harness.result == 'success' && needs.deploy-frontend.result == 'success' && needs.api-tests.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
