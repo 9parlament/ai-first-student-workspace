@@ -17,13 +17,16 @@ related: [ci-gradle-args, cfg-stands, test-pyramid]
 
 ```
 backend-unit-tests → integration-tests → build-backend
-frontend-unit-tests → ui-mock-tests → build-frontend
-параллельно: tests-harness
+frontend-unit-tests ─┐
+tests-harness ───────┴→ ui-mock-tests → build-frontend
+tests-harness → api-tests-stage / api-tests (e2e следует за ними)
 build-* → deploy-backend-stage / deploy-frontend-stage
   → api-tests-stage → e2e-tests-stage
   → deploy-backend / deploy-frontend → api-tests → e2e-tests
 publish-allure-report (всегда собирает артефакты; Pages — soft)
 ```
+
+`tests-harness` = `testinfra/` (не слой пирамиды). Красный harness не гоняет mock/api/e2e. Не встраивать шагом внутрь api/e2e — там другой `-DincludeTags` и чужой JaCoCo.
 
 PR: unit / integration / harness / mock. `build-*` и `deploy-*` — `main` / `workflow_dispatch`.  
 Deploy skip, если `DEPLOY_HOST` / `STAGE_HOST` пустые.  

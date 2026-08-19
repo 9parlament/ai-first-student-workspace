@@ -8,8 +8,9 @@ name: CI
 #
 # Graph (same job ids as the matrix clone, thin takeaway — no TestOps / Sonar / lanes):
 #   backend-unit-tests → integration-tests → build-backend
-#   frontend-unit-tests → ui-mock-tests → build-frontend
-#   tests-harness (parallel, not a CD gate)
+#   frontend-unit-tests ─┐
+#   tests-harness ───────┴→ ui-mock-tests → build-frontend
+#   tests-harness also gates api-tests-stage / api-tests (e2e follows those)
 #   build-* → deploy-*-stage → api-tests-stage → e2e-tests-stage
 #   e2e-tests-stage → deploy-backend / deploy-frontend → api-tests → e2e-tests
 #   publish-allure-report
@@ -158,34 +159,6 @@ jobs:
           if-no-files-found: ignore
           retention-days: 1
 
-  tests-harness:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    steps:
-      - *checkout
-      - *setup-java
-      - *setup-gradle
-      - name: Harness tests
-        run: ./gradlew test jacocoTestReport jacocoTestCoverageVerification -Denv=ci -DincludeTags=harness
-        working-directory: ${{ env.TESTS_DIR }}
-      - uses: actions/upload-artifact@v7
-        if: success()
-        with:
-          name: coverage-harness
-          path: |
-            ${{ env.TESTS_DIR }}/build/jacoco/**
-            ${{ env.TESTS_DIR }}/build/reports/jacoco/**
-          if-no-files-found: error
-      - name: Publish raw Allure results
-        if: always()
-        continue-on-error: true
-        uses: actions/upload-artifact@v7
-        with:
-          name: allure-results-harness
-          path: tests-java-gradle-junit5-allure3-selenide/build/allure-results/**
-          if-no-files-found: ignore
-          retention-days: 1
-
   frontend-unit-tests:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -226,8 +199,37 @@ jobs:
           if-no-files-found: ignore
           retention-days: 1
 
+  tests-harness:
+    # testinfra/ (ConfigReader, CSS, Chrome pin) — gate for TESTS_DIR jobs, not a pyramid layer.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - *checkout
+      - *setup-java
+      - *setup-gradle
+      - name: Harness tests
+        run: ./gradlew test jacocoTestReport jacocoTestCoverageVerification -Denv=ci -DincludeTags=harness
+        working-directory: ${{ env.TESTS_DIR }}
+      - uses: actions/upload-artifact@v7
+        if: success()
+        with:
+          name: coverage-harness
+          path: |
+            ${{ env.TESTS_DIR }}/build/jacoco/**
+            ${{ env.TESTS_DIR }}/build/reports/jacoco/**
+          if-no-files-found: error
+      - name: Publish raw Allure results
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-results-harness
+          path: tests-java-gradle-junit5-allure3-selenide/build/allure-results/**
+          if-no-files-found: ignore
+          retention-days: 1
+
   ui-mock-tests:
-    needs: frontend-unit-tests
+    needs: [frontend-unit-tests, tests-harness]
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -432,8 +434,8 @@ jobs:
           script: ${{ env.DEPLOY_SSH_SCRIPT }}
 
   api-tests-stage:
-    needs: deploy-backend-stage
-    if: always() && !cancelled() && needs.deploy-backend-stage.result == 'success'
+    needs: [deploy-backend-stage, tests-harness]
+    if: always() && !cancelled() && needs.deploy-backend-stage.result == 'success' && needs.tests-harness.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -641,8 +643,8 @@ jobs:
           script: ${{ env.DEPLOY_SSH_SCRIPT }}
 
   api-tests:
-    needs: deploy-backend
-    if: always() && !cancelled() && needs.deploy-backend.result == 'success'
+    needs: [deploy-backend, tests-harness]
+    if: always() && !cancelled() && needs.deploy-backend.result == 'success' && needs.tests-harness.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
