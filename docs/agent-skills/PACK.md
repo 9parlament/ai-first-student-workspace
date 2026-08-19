@@ -33,9 +33,11 @@
 | `qa-setup-host` | DNS / nginx / TLS | 3 · опц. | [example](examples/multistack/qa-setup-host/SKILL.md) |
 | `qa-coverage-audit` | оцени покрытие | 4 | [example](examples/multistack/qa-coverage-audit/SKILL.md) |
 | `qa-pyramid-plan` | план + один ярус | 4 | [example](examples/multistack/qa-pyramid-plan/SKILL.md) |
+| `qa-make-full-pyramid` | ярус за ярусом, уже влитая фича | 4 | [SKILL](qa-make-full-pyramid/SKILL.md) |
 | `qa-bootstrap-framework` | фреймворк с чеклиста | позже | [example](examples/multistack/qa-bootstrap-framework/SKILL.md) |
 
 CI: глагол в skill (`review`/`create`/`fix`/`run`/`stop`), раннер в RAG (`ci-github-actions` / `ci-jenkins`). `qa-run-ci` ≠ `qa-run-stand`.  
+`qa-make-full-pyramid` ≠ `qa-pyramid-plan` (план + одна дыра) и ≠ `qa-write-test` (один автотест): один вызов = один ярус уже влитой фичи, потом STOP.  
 Не skill: TMS (`test-taxonomy` / `tms-meta`), JaCoCo/Sonar (`quality-gates`). Хост ≠ stand.
 
 ## Rules (example)
