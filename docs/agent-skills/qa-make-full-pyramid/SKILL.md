@@ -12,38 +12,40 @@ description: >-
 `qa-write-test` (как писать api/e2e).
 
 «100% пирамиды» = каждый сценарий фичи на **своём** `@Layer` (RAG `test-pyramid`).
-Не 100% строк JaCoCo (`quality-gates`). Не e2e на весь CRUD. Slice ≠ слой.
+Не 100% строк JaCoCo (`quality-gates`). Не e2e на все глаголы. Slice ≠ слой.
+
+Контракт HTTP фичи — её RAG (заметка: `note-http`). Не копировать таблицу глаголов сюда.
 
 ## When
 
-- «закрой пирамиду по заметке», «ярус unit/api/e2e…», «следующий ярус»
+- «закрой пирамиду», «ярус unit/api/e2e…», «следующий ярус», «make-full-pyramid»
 - После влитой фичи, не вместо реализации
 
 ## Do not
 
-- Реализовывать фичу (нет заметки в коде → STOP, сказать человеку)
+- Реализовывать фичу (нет кода → STOP)
 - Два яруса в одном вызове; «добить всё»
 - Подменять `qa-write-test` / `qa-coverage-audit`
-- E2e на весь CRUD; `@Layer("screenshot")`; smoke как ярус
-- Delete/drop на prod без явного OK (`cfg-stands`)
+- E2e на все HTTP-глаголы; `@Layer("screenshot")`; smoke как ярус
+- Выдумывать контракт (не читая RAG фичи)
 - `localhost` / prod URL в Java
 - Чинить чужие тесты «заодно»
 - Commit без OK
 
 ## RAG (на вызов — 2–4 id, не все сразу)
 
-Каталог: `test-pyramid` · `test-layers` · `test-api-layer` · `cfg-stands` · `adr-when` · `quality-gates`.
+Каталог: `test-pyramid` · `test-layers` · `test-api-layer` · `cfg-stands` · `adr-when` · `quality-gates` + **RAG фичи**.
 
 | Ярус | Читать |
 |------|--------|
-| unit | `test-pyramid`, `quality-gates`, `test-layers` |
-| integration | `test-pyramid`, `test-layers`, `cfg-stands` |
+| unit | `test-pyramid`, RAG фичи, `quality-gates` |
+| integration | `test-pyramid`, RAG фичи, `cfg-stands` |
 | component | `test-pyramid`, `test-layers` |
-| api | `test-api-layer`, `test-layers`, `cfg-stands` |
-| e2e | `test-pyramid`, `test-layers`, `cfg-stands` (+ `qa-write-test` и его RAG) |
-| manual | `test-pyramid`, `test-layers`, `adr-when` |
+| api | RAG фичи, `test-api-layer`, `cfg-stands` |
+| e2e | `test-pyramid`, RAG фичи, `cfg-stands` (+ `qa-write-test` и его RAG) |
+| manual | `test-pyramid`, `cfg-stands`, `adr-when` |
 
-ADR фичи: `docs/adr/006-one-note-not-list.md`. Slice: `docs/adr/005-screenshot-not-layer.md`.
+Заметка: RAG фичи = `note-http`; ADR = `docs/adr/006-one-note-not-list.md`. Slice: `docs/adr/005-screenshot-not-layer.md`.
 
 ## Якоря (образец слоя, не дописывать чужой фиче)
 
@@ -64,21 +66,21 @@ ADR фичи: `docs/adr/006-one-note-not-list.md`. Slice: `docs/adr/005-screensh
 
 1. Фича влита? Нет → STOP. Не кодить продукт.
 2. Ярус = тот, что назвал человек, иначе первый пустой в порядке выше. Rule: один task = один `@Layer`.
-3. Прочитай **этот** SKILL и **2–4** RAG из таблицы яруса.
-4. Api/e2e — пиши по `qa-write-test` (PO/клиент, tags, стенды). Unit/integration/component/manual — по якорю слоя.
-5. Стенды: pipeline (`-Denv=ci`) / stage / prod. Delete — pipeline/stage; prod только с OK и отдельным `@Tag`.
+3. Прочитай **этот** SKILL и **2–4** RAG из таблицы яруса (включая RAG фичи).
+4. Api/e2e — пиши по `qa-write-test`. Unit/integration/component/manual — по якорю слоя.
+5. Стенды: `cfg-stands`. Разрушение на prod — сиды нельзя; фабрика — только если ADR фичи (в RAG фичи).
 6. Прогон **только этого** яруса (команда из таблицы, лучше точечный `-Dtest`).
-7. Строка в `docs/lessons/note-crud-pyramid.md` (сценарий × ярус, лог фазы, exit code).
-8. **STOP.** Ждать «следующий ярус». Не начинать соседний слой.
+7. Строка в живом отчёте, если есть (`docs/lessons/note-crud-pyramid.md`).
+8. **STOP.** Ждать «следующий ярус».
 
 ## DoD
 
 - [ ] Фича уже влита (этот skill её не писал)
 - [ ] Ровно один `@Layer`; slice не назван ярусом
-- [ ] 2–4 RAG, не вся папка
-- [ ] Стенды названы; delete на prod не без OK
-- [ ] Прогон яруса с `-DincludeTags` / exclude integration / Vitest; exit code в ответе
-- [ ] Живой отчёт обновлён
+- [ ] 2–4 RAG, не вся папка; контракт из RAG фичи
+- [ ] Стенды названы (`cfg-stands`)
+- [ ] Прогон яруса; exit code в ответе
+- [ ] Отчёт обновлён, если файл есть
 - [ ] Нет commit без OK
 - [ ] Следующий ярус не начат
 
@@ -86,6 +88,6 @@ ADR фичи: `docs/adr/006-one-note-not-list.md`. Slice: `docs/adr/005-screensh
 
 ```text
 Rules ON. Прочитай docs/agent-skills/qa-make-full-pyramid/SKILL.md
-и 2–4 RAG текущего яруса. Фича заметки уже влита.
+и 2–4 RAG текущего яруса (для заметки — note-http). Фича уже влита.
 Ярус: unit. По якорю ItemServiceTest. Не коммить. После яруса STOP.
 ```
