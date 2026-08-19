@@ -12,7 +12,7 @@ tags: [api, rest-assured]
 `@Layer("api")` + `@Tag("api")`. Браузера нет.
 
 ```bash
-./gradlew test -Denv=multistack_ci -DincludeTags=api
+./gradlew test -Denv=ci -DincludeTags=api
 ```
 
 ## Do

@@ -5,7 +5,7 @@ Retrieval-единицы **для учебного репо студента**. 
 **SSOT паттернов в monorepo:** `docs/rag/` (преподаватель).  
 **Студенту:** эти файлы кладём в `docs/agent-skills/rag/` учебного проекта. Skill пишет: «прочитай `docs/agent-skills/rag/po-fluent.md`».
 
-Якоря кода — **takeaway** `java_spring-typescript_react-java_selenide` (клон [autotests-ai/java_spring-typescript_react-java_selenide](https://github.com/autotests-ai/java_spring-typescript_react-java_selenide)). Ethalon в monorepo — тот же код в другой раскладке папок.
+Якоря кода — **takeaway** `ai-first-student-workspace` (клон [qa-guru/ai-first-student-workspace](https://github.com/qa-guru/ai-first-student-workspace)). Ethalon в monorepo — тот же код в другой раскладке папок.
 
 ## Как читать
 
@@ -21,14 +21,23 @@ Retrieval-единицы **для учебного репо студента**. 
 | `po-step` | [po-step.md](po-step.md) | `@Step` на методах страницы |
 | `test-negative` | [test-negative.md](test-negative.md) | negative login |
 | `test-taxonomy` | [test-taxonomy.md](test-taxonomy.md) | Epic / Feature / Tag |
+| `tms-meta` | [tms-meta.md](tms-meta.md) | `@AllureId` / `@Issue` |
+| `quality-gates` | [quality-gates.md](quality-gates.md) | JaCoCo / Sonar ≠ пирамида |
+| `adr-when` | [adr-when.md](adr-when.md) | rule/skill/RAG vs ADR |
 | `allure-attach` | [allure-attach.md](allure-attach.md) | screenshot / results |
 | `allure-reporting-requirements` | [allure-reporting-requirements.md](allure-reporting-requirements.md) | steps по `@Layer` |
 | `cfg-env-profile` | [cfg-env-profile.md](cfg-env-profile.md) | `-Denv=` |
 | `cfg-stands` | [cfg-stands.md](cfg-stands.md) | pipeline / stage / prod при написании теста |
 | `cfg-base-url` | [cfg-base-url.md](cfg-base-url.md) | `baseUrl` / `apiBaseUrl` |
 | `ci-gradle-args` | [ci-gradle-args.md](ci-gradle-args.md) | эталонные Gradle-команды |
+| `ci-github-actions` | [ci-github-actions.md](ci-github-actions.md) | jobs takeaway `ci.yml` (глаголы — skills `qa-*-ci`) |
+| `ci-jenkins` | [ci-jenkins.md](ci-jenkins.md) | jenkins.qa.guru: job, агент, signup |
+| `cfg-host` | [cfg-host.md](cfg-host.md) | DNS / nginx / TLS (не stand) |
+| `hw-check-verdict` | [hw-check-verdict.md](hw-check-verdict.md) | статус сдачи: принято / нет / ожидает |
+| `hw-check-ai-first` | [hw-check-ai-first.md](hw-check-ai-first.md) | рубрика занятий 2–4 |
+| `hw-check-voice` | [hw-check-voice.md](hw-check-voice.md) | тон комментария к сдаче |
 | `remote-selenoid` | [remote-selenoid.md](remote-selenoid.md) | браузер на хабе |
 | `test-api-layer` | [test-api-layer.md](test-api-layer.md) | Rest Assured, не Selenide |
 | `base-lifecycle` | [base-lifecycle.md](base-lifecycle.md) | `TestBase` setup/teardown |
 
-Модуль 1: явный путь к файлу. Модуль 2: зачем не класть все чанки в один промпт.
+Занятие 2: явный путь к файлу. Занятие 3: зачем 2–4 чанка, не вся папка. Занятие 4: ADR.

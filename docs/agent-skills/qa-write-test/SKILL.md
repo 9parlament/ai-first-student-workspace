@@ -33,7 +33,7 @@ RAG (прочитай до кода): `po-fluent`, `po-locators`, `po-step`, `te
 ## Steps
 
 1. Выбери **один** `@Layer` (чанк `test-layers`). Сомнения api vs e2e — api, если нет UI-состояния.
-2. **Стенды (чанк `cfg-stands`):** этот тест поедет на pipeline (`multistack_ci`), stage (`multistack_stage`) и/или prod (`multistack_prod`)? Данные (сиды) есть на всех? На prod нельзя delete без OK. URL только из config.
+2. **Стенды (чанк `cfg-stands`):** этот тест поедет на pipeline (`ci`), stage (`stage`) и/или prod (`prod`)? Данные (сиды) есть на всех? На prod нельзя delete без OK. URL только из config.
 3. Есть PO/клиент? Расширь его. Нет — создай локаторы в `pages/`, не в тесте.
 4. Класс: `@Layer`, `@Epic`, `@Feature`, `@DisplayName`. Метод: `@Tag` яруса + `positive`/`negative`.
 5. Прогон только этого теста на **pipeline-профиле** (локальный compose):
@@ -41,9 +41,9 @@ RAG (прочитай до кода): `po-fluent`, `po-locators`, `po-step`, `te
 ```bash
 cd tests-java-gradle-junit5-allure3-selenide
 # e2e
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -Dtest=LoginTests#<method>
+./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=LoginTests#<method>
 # api
-./gradlew test -Denv=multistack_ci -DincludeTags=api -Dtest=AuthApiTests#<method>
+./gradlew test -Denv=ci -DincludeTags=api -Dtest=AuthApiTests#<method>
 ```
 
 6. В ответе: слой, **на каких стендах поедет**, команда, exit code. Не коммитить.
@@ -55,7 +55,7 @@ cd tests-java-gradle-junit5-allure3-selenide
 - [ ] Нет URL и секретов в тесте
 - [ ] Локаторы не в тесте
 - [ ] `@Step` на PO или api-шаги в отчёте
-- [ ] Изолированный Gradle-прогон с `-Denv=multistack_ci` (или явно другой env)
+- [ ] Изолированный Gradle-прогон с `-Denv=ci` (или явно другой env)
 - [ ] Нет commit
 
 ## Example prompt

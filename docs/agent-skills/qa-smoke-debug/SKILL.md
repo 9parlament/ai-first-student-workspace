@@ -36,20 +36,21 @@ RAG: `docs/agent-skills/rag/ci-gradle-args.md`, `allure-attach.md`, `cfg-stands.
 
 ## 1. E2e local (учебный smoke)
 
-В этом стеке срез = `@Tag("e2e")`, не `@Tag("smoke")`.
+Срез занятия = `@Tag("e2e")` минус screenshot/mock. Gradle-task `testE2e` нет.  
+`@Tag("smoke")` на отдельных методах — узкий **prod slice**, не замена этой команды.
 
 ```bash
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 ```
 
 Зафиксируй: exit code, `tests run` / `failed`.
 
 Якорь: `tests/e2e/HomeTests.pageLoadFetchesItems` — `@Layer("e2e")`, `@Tag("e2e")`.
 
-Один класс (`-Dtest=` → JUnit/Gradle filter; повтор с тем же значением едет заново, не UP-TO-DATE):
+Один класс:
 
 ```bash
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -Dtest=HomeTests
+./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=HomeTests
 ```
 
 ---
@@ -74,17 +75,17 @@ npx allure serve build/allure-results
 **Пример:** `LoginTests.shouldShowErrorWhenPasswordIsWrong`
 
 ```bash
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e \
+./gradlew test -Denv=ci -DincludeTags=e2e \
   -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong
 ```
 
-1. Три раза подряд (тот же `-Dtest=`, без `--rerun-tasks`). 2. Сравни screenshot/trace в results. 3. Гипотеза, **не fix**.
+1. Три раза подряд. 2. Сравни screenshot/trace в results. 3. Гипотеза, **не fix**.
 
 ---
 
 ## DoD
 
-- [ ] Команда с `-Denv=multistack_ci` и `-DincludeTags=e2e`, не full suite
+- [ ] Команда с `-Denv=ci` и `-DincludeTags=e2e`, не full suite
 - [ ] Exit code записан
 - [ ] `build/allure-results` exists
 - [ ] Flaky: `-Dtest=Class#method` × 3

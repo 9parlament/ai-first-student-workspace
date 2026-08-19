@@ -21,20 +21,21 @@ RAG: `test-pyramid`, `test-layers`, `test-taxonomy`, `test-api-layer`.
 
 ## Steps
 
-1. Inventory классов в `tests/e2e`, `tests/api`, `tests/manual`, `tests/testinfra` (+ backend `src/test`, если есть).
+1. Inventory: `tests/e2e|api|manual|testinfra` + `backend-java-spring/src/test` + frontend `*.test.tsx`.
 2. Таблица: класс × `@Layer` × `@Tag` × сценарий (DisplayName).
-3. Flows продукта (минимум): login / register / logout / home health+items / auth API.
-4. Сверить с `tests/api/AuthApiTests` vs `tests/e2e/LoginTests` — где дубль, где дыра.
-5. Screenshot/mock — отдельно как **slice**, не как недостающий ярус.
+3. Flows: login / register / logout / home health+items / auth API.
+4. Сверить `AuthApiTests` vs `LoginTests` — где дубль, где дыра.
+5. Screenshot / mock / smoke — **slice**, не недостающий ярус.
+6. Дальше (занятие 4): отдельный task `qa-pyramid-plan`. Здесь только audit, без кода.
 
 ## Формат ответа
 
-| Сценарий | api | e2e | manual | Дыра? |
-|----------|:---:|:---:|:------:|-------|
-| login valid | | | | |
-| login wrong password | | | | |
-| register | | | | |
-| home items | | | | |
+| Сценарий | unit | cmp | api | e2e | man | Дыра? |
+|----------|:----:|:---:|:---:|:---:|:---:|-------|
+| login valid | | | | | | |
+| login 401 / wrong password | | | | | | |
+| register | | | | | | |
+| home items | | | | | | |
 
 Плюс 3 приоритетных пробела (ярус + почему не e2e).
 

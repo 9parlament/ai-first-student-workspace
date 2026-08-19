@@ -8,7 +8,7 @@ tags: [baseUrl, apiBaseUrl]
 
 **id:** `cfg-base-url`
 
-`multistack_ci.properties`: UI (Selenide) `baseUrl=http://localhost:9821/` — gateway, не голый frontend `:9811` (там нет `/api`). REST: `apiBaseUrl=http://localhost:8800/`.
+`ci.properties`: UI (Selenide) `baseUrl=http://localhost:9821/` — gateway, не голый frontend `:9811` (там нет `/api`). REST: `apiBaseUrl=http://localhost:8800/`.
 
 PO открывает пути: `open("/login")`, `open("/")`.
 

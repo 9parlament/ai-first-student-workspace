@@ -6,7 +6,7 @@
  *
  *        (\_/)
  *        ( •_•)
- *        / >./gradlew test -Denv=multistack_ci -DincludeTags=e2e
+ *        / >./gradlew test -Denv=ci -DincludeTags=e2e
  *
  *              .-------.
  *             /  ✓ ✓ ✓  \
@@ -33,8 +33,9 @@ buildscript {
         restAssuredVersion  = '5.5.7'
         jacksonVersion      = '2.18.2'
         ownerVersion        = '1.0.12'
+        datafakerVersion    = '2.4.4'
         testParallelForks   = 1
-        defaultEnv          = 'multistack_ci'
+        defaultEnv          = 'ci'
     }
 }
 
@@ -51,9 +52,6 @@ java {
     }
 }
 
-def sonarHarnessScopeExclusions =
-        '**/*Test.java,**/*Tests.java,**/pages/**,**/api/**,**/annotations/**,**/allure/**,**/extensions/**,**/tests/**,**/helpers/BrowserSessionHelper.java,**/helpers/HarCapture.java,**/helpers/HarViewerHtml.java,**/helpers/LocalChromePin.java,**/helpers/ScreenshotHelper.java,**/helpers/ViewportHelper.java,**/config/TestConfig.java'
-
 sonar {
     properties {
         property 'sonar.projectKey', System.getenv('SONAR_PROJECT_KEY') ?: 'autotests-ai-multistack-app-tests-java-gradle-junit5-allure3-selenide'
@@ -65,9 +63,9 @@ sonar {
         property 'sonar.java.binaries', 'build/classes/java/test'
         property 'sonar.coverage.jacoco.xmlReportPaths',
                 "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
-        // Harness axis only — pages/api/pyramid slices are exercised elsewhere, not Sonar-gated.
-        property 'sonar.exclusions', sonarHarnessScopeExclusions
-        property 'sonar.coverage.exclusions', sonarHarnessScopeExclusions
+        // Same allow-list as JaCoCo harness (ConfigReader + CSS helpers). A deny-list
+        // of other helpers lets new page/Allure classes fail Coverage on New Code.
+        property 'sonar.inclusions', '**/config/ConfigReader.java,**/helpers/LayoutCss.java,**/helpers/TokensCss.java'
     }
 }
 
@@ -109,6 +107,7 @@ dependencies {
             "io.rest-assured:rest-assured:${restAssuredVersion}",
             "io.rest-assured:json-schema-validator:${restAssuredVersion}",
             "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            "net.datafaker:datafaker:${datafakerVersion}",
             'io.qameta.allure:allure-rest-assured')
     testRuntimeOnly (
             'org.junit.platform:junit-platform-launcher',
@@ -199,7 +198,7 @@ tasks.register('healthCheck') {
 
 test {
     dependsOn healthCheck
-    description = 'Run tests: -Denv=<stand> -DincludeTags=<tags> -DexcludeTags=<tags> -Dtest=<Class|#method>'
+    description = 'Run tests: -Denv=<stand> -DincludeTags=<tags> -DexcludeTags=<tags>'
     jacoco {
         enabled = jacocoEnabledForCurrentRun()
     }
@@ -212,16 +211,6 @@ test {
         if (excludeTagsProp) {
             excludeTags(*(excludeTagsProp.split(',')*.trim()))
         }
-    }
-    // Skill canon: -Dtest=HomeTests | -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong
-    // Gradle filter uses Class.method; keep includeTags/excludeTags as an extra AND.
-    def testFilterProp = System.getProperty('test')?.trim()
-    if (testFilterProp) {
-        filter {
-            includeTestsMatching testFilterProp.replace('#', '.')
-        }
-        // Isolated reruns (flaky ×3) must execute, not UP-TO-DATE.
-        outputs.upToDateWhen { false }
     }
     systemProperty 'env', testEnv
     systemProperty 'allureReportMode', allureReportMode

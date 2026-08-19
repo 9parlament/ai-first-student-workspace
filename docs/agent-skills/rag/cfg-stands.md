@@ -15,12 +15,12 @@ related: [cfg-env-profile, cfg-base-url, remote-selenoid, ci-gradle-args]
 
 | Слово | Смысл | В takeaway сейчас |
 |-------|--------|-------------------|
-| **pipeline** (CI) | эфемерный стенд в GitHub Actions / Jenkins, тот же код что локальный compose | `-Denv=multistack_ci` |
-| **stage** | предпрод: прод-подобный URL + Selenoid; данные можно портить осторожно | `-Denv=multistack_stage` — [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/) |
-| **prod** | боевой / витринный деплой этого стека (не матрица `/stack/…`) | `-Denv=multistack_prod` — [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) + `remoteUrl` хаба (креды не в git) |
-| mock | UI без живого backend | `-Denv=multistack_mock` (slice, не ярус пирамиды) |
+| **pipeline** (CI) | эфемерный стенд в GitHub Actions / Jenkins, тот же код что локальный compose | `-Denv=ci` |
+| **stage** | предпрод: прод-подобный URL + Selenoid; данные можно портить осторожно | `-Denv=stage` — [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/) |
+| **prod** | боевой / витринный деплой этого стека (не матрица `/stack/…`) | `-Denv=prod` — [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) + `remoteUrl` хаба (креды не в git) |
+| mock | UI без живого backend | `-Denv=mock` (slice, не ярус пирамиды) |
 
-Локальный `docker compose` на занятии ≈ pipeline-профиль (`multistack_ci`). Это не «третий прод».
+Локальный `docker compose` на занятии ≈ pipeline-профиль (`ci`). Это не «третий прод».
 
 ## Что решить, пока пишешь тест (не после)
 

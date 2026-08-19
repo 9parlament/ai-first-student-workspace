@@ -24,7 +24,7 @@ RAG: `cfg-stands`, `cfg-env-profile`, `cfg-base-url`, `remote-selenoid`, `ci-gra
 - Деструктивные тесты на prod без OK
 - Выдумывать host в Java, если DNS ещё не поднят
 
-## A. Pipeline ≈ локальный CI (`multistack_ci`)
+## A. Pipeline ≈ локальный CI (`ci`)
 
 ```bash
 docker compose up -d --build
@@ -32,24 +32,24 @@ curl -sf http://localhost:8800/api/health
 # UI: http://localhost:9821/
 
 cd tests-java-gradle-junit5-allure3-selenide
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 ```
 
 Jenkins `{login}-app-tests` / GHA — тот же `-Denv` и tags, что в job.
 
-## B. Stage (`multistack_stage`)
+## B. Stage (`stage`)
 
 ```bash
-./gradlew test -Denv=multistack_stage -DincludeTags=e2e -DexcludeTags=screenshot,mock \
+./gradlew test -Denv=stage -DincludeTags=e2e -DexcludeTags=screenshot,mock \
   -DremoteUrl="$SELENOID_REMOTE_URL"
 ```
 
 URL: [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/). Нет DNS/стенда → не подменять URL в Java.
 
-## C. Prod (`multistack_prod`)
+## C. Prod (`prod`)
 
 ```bash
-./gradlew test -Denv=multistack_prod -DincludeTags=e2e -DexcludeTags=screenshot,mock \
+./gradlew test -Denv=prod -DincludeTags=e2e -DexcludeTags=screenshot,mock \
   -DremoteUrl="$SELENOID_REMOTE_URL"
 ```
 

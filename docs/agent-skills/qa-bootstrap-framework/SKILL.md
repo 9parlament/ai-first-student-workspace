@@ -24,7 +24,7 @@ RAG: `e2e-layers`, `test-pyramid`, `cfg-env-profile`, `cfg-base-url`, `cfg-stand
 ## Steps
 
 1. База: clone  
-   `https://github.com/autotests-ai/java_spring-typescript_react-java_selenide`  
+   `https://github.com/qa-guru/ai-first-student-workspace`  
    или учебный zip с занятия.
 2. Чеклист слоёв (должно появиться / остаться):
 
