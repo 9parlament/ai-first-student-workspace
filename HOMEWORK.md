@@ -9,6 +9,8 @@
 
 Не коммить в `qa-guru`. Не гонять prod.
 
+Свой DNS/nginx — **опционально**, отдельный task: skill `qa-setup-host` + RAG `cfg-host`. Витрина курса уже на [ai-first.autotests.ai](https://ai-first.autotests.ai/).
+
 ## Промпт
 
 ```text
@@ -37,9 +39,9 @@ docker compose up -d --build
 curl -sf http://localhost:8800/api/health
 UI: http://localhost:9821/ (не :9811)
 
-4) Учебный e2e (нет task testE2e, нет @Tag("smoke"), не full suite):
+4) Учебный e2e (нет task testE2e; @Tag("smoke") — prod slice, не эта команда):
 cd tests-java-gradle-junit5-allure3-selenide
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 
 5) Верни: URL origin (форк), health, команда, exit code, tests run/failed,
 путь tests-java-gradle-junit5-allure3-selenide/build/allure-results.

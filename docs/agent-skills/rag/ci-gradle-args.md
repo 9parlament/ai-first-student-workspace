@@ -14,33 +14,34 @@ tags: [gradle, tags, env]
 
 | `-Denv=` | Что это | App |
 |----------|---------|-----|
-| `multistack_ci` | pipeline ≈ локальный compose / CI | UI [http://localhost:9821/](http://localhost:9821/) · API [http://localhost:8800/](http://localhost:8800/) |
-| `multistack_stage` | stage takeaway | [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/) + `remoteUrl` хаба |
-| `multistack_prod` | prod takeaway (не матрица `/stack/…`) | [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) + `remoteUrl` хаба |
+| `ci` | pipeline ≈ локальный compose / CI | UI [http://localhost:9821/](http://localhost:9821/) · API [http://localhost:8800/](http://localhost:8800/) |
+| `stage` | stage takeaway | [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/) + `remoteUrl` хаба |
+| `prod` | prod takeaway (не матрица `/stack/…`) | [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) + `remoteUrl` хаба |
 
-Перед `multistack_ci`: `docker compose up -d --build` в корне takeaway. Health: `curl -sf http://localhost:8800/api/health`.
+Перед `ci`: `docker compose up -d --build` в корне takeaway. Health: `curl -sf http://localhost:8800/api/health`.
 
 ## Команды
 
 ```bash
 cd tests-java-gradle-junit5-allure3-selenide
 
-# e2e (учебный «smoke» в этом стеке — тег e2e, не @Tag("smoke"))
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+# e2e на занятии (шире prod-smoke). Task testE2e нет.
+# @Tag("smoke") есть на узких методах — для prod slice, не вместо этой команды.
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 
-# один класс / метод (-Dtest= → filter; класс или Class#method; повтор не UP-TO-DATE)
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -Dtest=HomeTests
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e \
+# один класс / метод
+./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=HomeTests
+./gradlew test -Denv=ci -DincludeTags=e2e \
   -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong
 
 # api без браузера
-./gradlew test -Denv=multistack_ci -DincludeTags=api
+./gradlew test -Denv=ci -DincludeTags=api
 
 # manual (шаги в коде, не браузер)
-./gradlew test -Denv=multistack_ci -DincludeTags=manual
+./gradlew test -Denv=ci -DincludeTags=manual
 
 # «прод»-стенд (нужен remoteUrl с кредами — в git их нет)
-./gradlew test -Denv=multistack_prod -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=prod -DincludeTags=e2e -DexcludeTags=screenshot,mock
 ```
 
 Allure results: `build/allure-results`. Отчёт: `npx allure serve build/allure-results` (после `npm ci` в модуле тестов).
@@ -49,4 +50,5 @@ Allure results: `build/allure-results`. Отчёт: `npx allure serve build/allu
 
 - `./gradlew test` без `-DincludeTags` на задаче «smoke / e2e».
 - Выдумывать task `testE2e` — в takeaway его нет.
+- Путать `@Tag("smoke")` (slice) с ярусом `@Layer("e2e")`.
 - Хардкодить URL в тесте — только `-Denv` / properties.

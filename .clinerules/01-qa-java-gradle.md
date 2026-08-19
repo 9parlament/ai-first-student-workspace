@@ -14,25 +14,26 @@ paths:
 
 ```bash
 cd tests-java-gradle-junit5-allure3-selenide
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 ```
 
-- Нет task `testE2e`. Нет `@Tag("smoke")` — срез = `@Tag("e2e")`.
+- Нет Gradle-task `testE2e`. Срез занятия = `@Tag("e2e")` минус screenshot/mock.
+- `@Tag("smoke")` на узких методах — prod slice, не ярус и не замена команды выше.
 - Не `./gradlew test` без `-DincludeTags` для задачи «smoke / e2e».
-- Всегда `-Denv=` (pipeline `multistack_ci` / stage / prod). URL не в тестах.
+- Всегда `-Denv=` (pipeline `ci` / stage / prod). URL не в тестах.
 
 ## Один тест
 
 ```bash
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e -Dtest=HomeTests
-./gradlew test -Denv=multistack_ci -DincludeTags=e2e \
+./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=HomeTests
+./gradlew test -Denv=ci -DincludeTags=e2e \
   -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong
 ```
 
 ## API
 
 ```bash
-./gradlew test -Denv=multistack_ci -DincludeTags=api
+./gradlew test -Denv=ci -DincludeTags=api
 ```
 
 ## Allure

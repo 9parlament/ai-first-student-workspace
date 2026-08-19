@@ -8,9 +8,9 @@ tags: [env, properties]
 
 **id:** `cfg-env-profile`
 
-`-Denv=multistack_ci` → `src/test/resources/config/multistack_ci.properties`.
+`-Denv=ci` → `src/test/resources/config/ci.properties`.
 
-Файлы в takeaway: `default.properties` (флаги) + `multistack_ci` / `multistack_mock` / `multistack_prod` (куда стучимся).
+Файлы в takeaway: `default.properties` (флаги) + `ci` / `mock` / `stage` / `prod` (куда стучимся).
 
 Ось **pipeline / stage / prod** — чанк `cfg-stands`. Тест не содержит URL стенда.
 
@@ -21,5 +21,5 @@ tags: [env, properties]
 
 ## Don't
 
-- Файл `local.properties` / `ci.properties` без stand-имени.
+- Файл `local.properties` / `multistack_ci.properties` (стенд — короткое имя: `ci` / `stage` / `prod` / `mock`).
 - Хардкод `http://localhost:9821` в `LoginTests`.

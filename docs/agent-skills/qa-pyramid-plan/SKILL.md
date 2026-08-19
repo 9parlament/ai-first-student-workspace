@@ -7,10 +7,10 @@ description: >-
 
 # 100% пирамида — план и один шаг
 
-RAG: `test-pyramid`, `test-layers`, `test-api-layer`, `cfg-stands`.  
-Идея ADR 005: **visual/screenshot — slice, не `@Layer`**. Полный ADR — модуль 3; здесь только это правило.
+RAG: `test-pyramid`, `test-layers`, `test-api-layer`, `cfg-stands`, `adr-when`.  
+ADR: `docs/adr/005-screenshot-not-layer.md` после sync (в паке: `docs/agent-skills/adr/`). Сначала `qa-coverage-audit`, потом этот план, потом `qa-write-test`.
 
-«100%» = сценарии на **своих** ярусах, не 100% строк кода.
+«100%» = продукт закрыт по пирамиде **целиком**, не каждый ярус по 100% и не 100% строк кода. Этот skill закрывает **одну дыру** в общей карте, не «добить слой до 100%».
 
 ## When
 

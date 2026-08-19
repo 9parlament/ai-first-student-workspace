@@ -12,7 +12,7 @@ related: [allure-attach, po-step]
 | `@Layer` | Steps | Attachments |
 |----------|-------|-------------|
 | harness / unit | опционально | не требуются |
-| api | обязательно (клиент / `Allure.step`) | Rest Assured listener в `multistack_ci` |
+| api | обязательно (клиент / `Allure.step`) | Rest Assured listener в `ci` |
 | e2e | обязательно (PO `@Step`) | screenshot — по флагу env |
 | manual | обязательно (`Allure.step`) | не браузер |
 
