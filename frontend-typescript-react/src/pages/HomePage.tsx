@@ -203,7 +203,8 @@ export function HomePage() {
               label="Text"
               id="note-input"
               name="noteText"
-              type="text"
+              multiline
+              rows={4}
               maxLength={2000}
               data-testid="note-input"
               value={noteText}

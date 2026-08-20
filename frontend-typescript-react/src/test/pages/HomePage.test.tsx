@@ -105,6 +105,7 @@ describe('HomePage', () => {
     expect(screen.getByTestId('welcome-panel')).toBeVisible();
     expect(screen.getByTestId('logout-button')).toBeInTheDocument();
     expect(screen.getByTestId('delete-account-button')).toHaveTextContent('Delete account');
+    expect(screen.getByTestId('note-input').tagName).toBe('TEXTAREA');
   });
 
   it('clears invalid session and keeps welcome hidden', async () => {
