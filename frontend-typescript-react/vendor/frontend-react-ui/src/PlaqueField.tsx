@@ -106,7 +106,7 @@ export function PlaqueField({
       {multiline ? (
         <Textarea
           className="plaque-field__control"
-          {...inputProps}
+          {...(inputProps as TextareaHTMLAttributes<HTMLTextAreaElement>)}
           id={controlId}
           name={controlName}
           rows={rows}
