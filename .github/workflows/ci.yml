@@ -11,8 +11,9 @@ name: CI
 #   frontend-unit-tests ─┐
 #   tests-harness ───────┴→ ui-mock-tests → build-frontend
 #   tests-harness also gates api-tests-stage / api-tests / e2e-tests-stage / e2e-tests
-#   build-* → deploy-*-stage → api-tests-stage → e2e-tests-stage
+#   build-* → deploy-*-stage → api-tests-stage → e2e-tests-stage  (push develop)
 #   e2e-tests-stage → deploy-backend / deploy-frontend → api-tests → e2e-tests
+#     (push main/master; stage jobs skip, prod does not wait on stage e2e)
 #   publish-allure-report
 #
 # Pipeline api/e2e (`-Denv=ci`) stay local (`qa-run-stand`). CI api/e2e run after
@@ -20,8 +21,8 @@ name: CI
 #
 # Stands:
 #   pipeline — compose on the runner / laptop (`-Denv=ci`)
-#   stage    — https://stage.ai-first.autotests.ai/  (SSH + live tests only after deploy)
-#   prod     — https://ai-first.autotests.ai/        (SSH + live tests only after stage e2e)
+#   stage    — https://stage.ai-first.autotests.ai/  (push develop or dispatch deploy_stage)
+#   prod     — https://ai-first.autotests.ai/        (push main/master or dispatch deploy)
 #
 # Allure: one job publish-allure-report (lock pins, npm ci, generate). Pages is a
 # soft step in that job (push only). GitHub rejects expressions in
@@ -34,7 +35,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main, master]
+    branches: [main, master, develop]
   workflow_dispatch:
     inputs:
       deploy:
@@ -334,7 +335,14 @@ jobs:
       (needs.integration-tests.result == 'success' || needs.integration-tests.result == 'skipped') &&
       (
         github.event_name == 'workflow_dispatch' ||
-        ((github.event_name == 'push') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'))
+        (
+          github.event_name == 'push' &&
+          (
+            github.ref == 'refs/heads/main' ||
+            github.ref == 'refs/heads/master' ||
+            github.ref == 'refs/heads/develop'
+          )
+        )
       )
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -350,7 +358,14 @@ jobs:
       needs.ui-mock-tests.result == 'success' &&
       (
         github.event_name == 'workflow_dispatch' ||
-        ((github.event_name == 'push') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'))
+        (
+          github.event_name == 'push' &&
+          (
+            github.ref == 'refs/heads/main' ||
+            github.ref == 'refs/heads/master' ||
+            github.ref == 'refs/heads/develop'
+          )
+        )
       )
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -367,7 +382,7 @@ jobs:
       vars.STAGE_HOST != '' &&
       vars.STAGE_APP_DIR != '' &&
       (
-        (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) ||
+        (github.event_name == 'push' && github.ref == 'refs/heads/develop') ||
         (github.event_name == 'workflow_dispatch' && inputs.deploy_stage)
       )
     runs-on: ubuntu-24.04
@@ -404,7 +419,7 @@ jobs:
       vars.STAGE_HOST != '' &&
       vars.STAGE_APP_DIR != '' &&
       (
-        (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) ||
+        (github.event_name == 'push' && github.ref == 'refs/heads/develop') ||
         (github.event_name == 'workflow_dispatch' && inputs.deploy_stage)
       )
     runs-on: ubuntu-24.04
@@ -562,8 +577,11 @@ jobs:
       vars.DEPLOY_HOST != '' &&
       vars.DEPLOY_APP_DIR != '' &&
       (
-        (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) ||
-        (github.event_name == 'workflow_dispatch' && inputs.deploy)
+        (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') &&
+        (
+          github.event_name == 'push' ||
+          (github.event_name == 'workflow_dispatch' && inputs.deploy)
+        )
       ) &&
       (
         needs.e2e-tests-stage.result == 'success' ||
@@ -606,8 +624,11 @@ jobs:
       vars.DEPLOY_HOST != '' &&
       vars.DEPLOY_APP_DIR != '' &&
       (
-        (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) ||
-        (github.event_name == 'workflow_dispatch' && inputs.deploy)
+        (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') &&
+        (
+          github.event_name == 'push' ||
+          (github.event_name == 'workflow_dispatch' && inputs.deploy)
+        )
       ) &&
       (
         needs.e2e-tests-stage.result == 'success' ||
