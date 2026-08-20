@@ -14,7 +14,7 @@ description: >-
 «100% пирамиды» = каждый сценарий фичи на **своём** `@Layer` (RAG `test-pyramid`).
 Не 100% строк JaCoCo (`quality-gates`). Не e2e на все глаголы. Slice ≠ слой.
 
-Контракт HTTP фичи — её RAG (заметка: `note-http`). Не копировать таблицу глаголов сюда.
+Контракт HTTP фичи — её RAG (CRUD: `crud-http`). Не копировать таблицу глаголов сюда.
 
 ## When
 
@@ -45,7 +45,7 @@ description: >-
 | e2e | `test-pyramid`, RAG фичи, `cfg-stands` (+ `qa-write-test` и его RAG) |
 | manual | `test-pyramid`, `cfg-stands`, `adr-when` |
 
-Заметка: RAG фичи = `note-http`; ADR = `docs/adr/006-one-note-not-list.md`. Slice: `docs/adr/005-screenshot-not-layer.md`.
+Пример takeaway (заметка): RAG = `crud-http`; ADR = `docs/adr/006-one-note-not-list.md`. Slice: `docs/adr/005-screenshot-not-layer.md`.
 
 ## Якоря (образец слоя, не дописывать чужой фиче)
 
@@ -88,6 +88,6 @@ description: >-
 
 ```text
 Rules ON. Прочитай docs/agent-skills/qa-make-full-pyramid/SKILL.md
-и 2–4 RAG текущего яруса (для заметки — note-http). Фича уже влита.
+и 2–4 RAG текущего яруса (для HTTP CRUD — crud-http). Фича уже влита.
 Ярус: unit. По якорю ItemServiceTest. Не коммить. После яруса STOP.
 ```

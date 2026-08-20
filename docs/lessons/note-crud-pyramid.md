@@ -2,7 +2,7 @@
 
 Живой отчёт. Обновлять **в конце фазы**. PDF и PR — только по OK человека.
 
-HTTP-глаголы **не дублировать** здесь — SSOT: [`note-http`](../agent-skills/rag/note-http.md).
+HTTP-глаголы **не дублировать** здесь — SSOT: [`crud-http`](../agent-skills/rag/crud-http.md).
 
 ## Цель
 
@@ -22,7 +22,7 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`note-
 ## Таблица: сценарий × ярус
 
 Ячейка: `—` = не этот ярус; `план` = свой ярус, теста ещё нет; дальше — класс#метод.  
-Слоты по `note-http` + `test-pyramid`.
+Слоты по `crud-http` + `test-pyramid`.
 
 | Сценарий | Свой ярус | unit | integration | component | api | e2e | manual | Стенды |
 |----------|-----------|:----:|:-----------:|:---------:|:---:|:---:|:------:|--------|
@@ -43,8 +43,8 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`note-
 |------|-----|-------|--------|------|------|
 | 0 | оркестратор + ADR + отчёт + PACK | skill `qa-make-full-pyramid`; ADR 006; этот файл; PACK | нет | n/a | артефакты есть |
 | 1 | контракт | ADR 006; сначала CRUD-POST | нет | n/a | затем сверка RFC |
-| 1b | канон RFC | RAG `note-http`; ADR 006 | нет | n/a | POST убран; PUT 201/200 |
-| 1c | SSOT | `note-http` в monorepo RAG + диета; generic skills без таблицы глаголов | нет | n/a | план ссылается на RAG |
+| 1b | канон RFC | RAG `crud-http`; ADR 006 | нет | n/a | POST убран; PUT 201/200 |
+| 1c | SSOT | `crud-http` в monorepo RAG + диета; generic skills без таблицы глаголов | нет | n/a | план ссылается на RAG |
 | 2 | backend | `V3__notes.sql`; `NoteController`/`NoteService`; JaCoCo-тесты модуля | `./gradlew test jacocoTestCoverageVerification` | 0 | PUT 201/200, PATCH merge-patch, cascade delete |
 | 3 | frontend | `lib/note.ts`; `note-panel` на Home; stub GET `/api/note` в `HomePage.test` | `npm test` | 0 | Save = PUT; PATCH с UI нет |
 
@@ -54,7 +54,7 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`note-
 |------|----------------------|
 | **Skill** | `qa-make-full-pyramid` = один ярус + STOP; api/e2e — `qa-write-test`; план дыр — `qa-pyramid-plan`. |
 | **Rule** | Нет commit без OK; один `@Layer`; URL не в Java; сиды не сносить (`cfg-stands`). |
-| **RAG** | `note-http` = палата мер HTTP; `cfg-stands` = стенды; плюс 2–3 чанка яруса. |
+| **RAG** | `crud-http` = палата мер HTTP; `cfg-stands` = стенды; плюс 2–3 чанка яруса. |
 | **ADR** | Почему синглтон и RFC, не POST+409 (006); screenshot не слой (005). |
 
 Без связки агент пишет e2e на все глаголы, путает 100% с JaCoCo или возвращает POST+409.

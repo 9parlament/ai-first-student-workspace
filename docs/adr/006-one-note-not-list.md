@@ -14,7 +14,7 @@
 ## Решение
 
 1. Продукт: **одна** заметка на пользователя. Ресурс `/api/note`. Нет коллекции и `{id}`.
-2. Глаголы — **как в RFC/MDN**, не «CRUD-отсебятина». Таблица статусов — RAG `note-http`, не этот файл.
+2. Глаголы — **как в RFC/MDN**, не «CRUD-отсебятина». Таблица статусов — RAG `crud-http`, не этот файл.
 3. «100% пирамиды» = сценарий на своём `@Layer`. Контракт — `api`; один e2e happy path.
 4. Delete на prod **этой** фичи можно тем же тестом: фабрика + teardown, не сид `user1`. Нет `if (prod)`.
 
@@ -26,4 +26,4 @@
 
 ## RAG
 
-`note-http` · `test-pyramid` · `cfg-stands` · `adr-when`
+`crud-http` · `test-pyramid` · `cfg-stands` · `adr-when`
