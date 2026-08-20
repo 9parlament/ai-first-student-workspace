@@ -7,7 +7,7 @@
  *
  * Usage:
  *   node scripts/validate-allurerc.mjs [path/to/allurerc.mjs]
- * Default: ./allurerc.mjs (cwd) or ethalon _ethalon/allurerc.mjs when run from projects/autotests-ai-multistack-home/ethalon/tests/_tests-meta.
+ * Default: ./allurerc.mjs (cwd) or ethalon _ethalon/allurerc.mjs when run from projects/autotests-ai-multistack-home/autotests-ai-multistack-app/tests/_tests-meta.
  */
 import { pathToFileURL } from "node:url";
 import fs from "node:fs";
