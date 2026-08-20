@@ -10,7 +10,7 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`note-
 «100% пирамиды» = каждый сценарий на своём `@Layer` (`test-pyramid`).  
 Не 100% строк JaCoCo. Не e2e на все глаголы. Slice (`smoke` / `screenshot` / `mock`) ≠ слой.
 
-Продукт на старте: логин/регистрация + health/items. Заметку **ещё не реализуем**.
+Продукт: логин/регистрация + health/items + синглтон `/api/note` и `note-panel`. Ярусы takeaway — после «следующий ярус».
 
 ## ADR
 
@@ -35,7 +35,7 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`note-
 
 \* api-delete — тот же ярус `api`. PATCH vs PUT — тоже `api`, не два e2e.
 
-Покрытие: **0/6 ярусов**. Фичи в коде нет.
+Покрытие takeaway: **0/6 ярусов**. Фича в коде есть. Backend unit/integration под JaCoCo — quality gate модуля, не ярусы пака (`tests-java-…`).
 
 ## Лог фаз
 
@@ -45,6 +45,8 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`note-
 | 1 | контракт | ADR 006; сначала CRUD-POST | нет | n/a | затем сверка RFC |
 | 1b | канон RFC | RAG `note-http`; ADR 006 | нет | n/a | POST убран; PUT 201/200 |
 | 1c | SSOT | `note-http` в monorepo RAG + диета; generic skills без таблицы глаголов | нет | n/a | план ссылается на RAG |
+| 2 | backend | `V3__notes.sql`; `NoteController`/`NoteService`; JaCoCo-тесты модуля | `./gradlew test jacocoTestCoverageVerification` | 0 | PUT 201/200, PATCH merge-patch, cascade delete |
+| 3 | frontend | `lib/note.ts`; `note-panel` на Home; stub GET `/api/note` в `HomePage.test` | `npm test` | 0 | Save = PUT; PATCH с UI нет |
 
 ## Вывод: зачем skills / rules / RAG / ADR
 
@@ -59,5 +61,5 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`note-
 
 ## Что осталось человеку
 
-- Сказать **«реализуй заметку»** (контракт — только `note-http`). Commit / PR — только явным OK.
-- Ярусы тестов — «следующий ярус» **после** влитой фичи.
+- Ярусы takeaway — «следующий ярус» (`qa-make-full-pyramid`), по одному чату.
+- Stage / PDF / PR — только явным OK. Commit — тоже.

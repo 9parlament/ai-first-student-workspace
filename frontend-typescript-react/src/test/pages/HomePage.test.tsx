@@ -50,6 +50,9 @@ function stubDefaultApis(
       if (url.includes('/api/auth/logout')) {
         return Promise.resolve({ ok: true, status: 204, json: async () => ({}) } as Response);
       }
+      if (url.includes('/api/note')) {
+        return Promise.resolve(jsonResponse({ message: 'Note not found' }, false, 404));
+      }
       return Promise.reject(new Error(`unexpected request: ${url}`));
     }),
   );
