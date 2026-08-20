@@ -43,16 +43,16 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'lcov', 'html'],
       reportsDirectory: './coverage',
-      include: ['src/**/*.{ts,tsx}'],
-      // main.tsx / styles.ts are bootstrap (createRoot, CSS imports) — nothing to assert in jsdom.
+      include: ['src/**/*.{ts,tsx}', 'src/pwa/pwa-register.js'],
+      // main.tsx / styles.ts are bootstrap (createRoot, CSS imports) — same omit as
+      // Java MultistackApplication. Nothing to assert in jsdom.
       // vendor/ is the in-tree DS alias (ethalon keeps the same kit outside this package).
       exclude: ['src/test/**', 'src/**/*.d.ts', 'src/main.tsx', 'src/styles.ts', 'vendor/**'],
-      // Regression floor, not a target: raise when coverage grows, never lower silently.
       thresholds: {
-        lines: 92,
-        statements: 92,
-        branches: 82,
-        functions: 95,
+        lines: 100,
+        statements: 100,
+        branches: 100,
+        functions: 100,
       },
     },
   },

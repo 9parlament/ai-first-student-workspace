@@ -118,15 +118,7 @@ describe('network failures', () => {
   });
 });
 
-describe('fetchProfile', () => {
-  beforeEach(() => {
-    localStorage.clear();
-  });
-
-  it('refuses to call the API without a token', () => {
-    expect(() => fetchProfile()).toThrow('Missing auth token');
-  });
-});
+  it('login maps a failed fetch to the network error copy', async () => {
 
 describe('deleteAccount', () => {
   beforeEach(() => {

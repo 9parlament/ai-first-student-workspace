@@ -3,9 +3,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   envNavItems,
   envOrigins,
-  productHost,
   PROD_ORIGIN,
   PUBLIC_HOST,
+  productHost,
   STAGE_ORIGIN,
 } from '../../vendor/frontend-javascript-app/js/env-hosts.js';
 

@@ -30,7 +30,7 @@ cd tests-java-gradle-junit5-allure3-selenide
 ./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 ```
 
-CI: `.github/workflows/ci.yml` (SSOT `_ethalon/singlestack_github.yml`).  
+CI: `.github/workflows/ci.yml` (same orchestrator as the clone; stack knobs in `env:`).  
 Prod stand: [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) (`-Denv=prod`).  
 Stage: [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/) (`-Denv=stage`).
 
