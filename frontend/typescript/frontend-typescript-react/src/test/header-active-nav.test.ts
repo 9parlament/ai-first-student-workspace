@@ -41,12 +41,6 @@ const REFERENCE_HEADER_CONFIG: HeaderConfig = {
       active: false,
       testid: 'header-nav-register',
     },
-    {
-      href: '/stack/',
-      label: 'Stack',
-      active: false,
-      testid: 'header-nav-stack',
-    },
     ...envNavItems(),
   ],
   lang: { default: 'en' as const },
@@ -89,8 +83,8 @@ async function mountAt(path: string): Promise<void> {
   vi.resetModules();
   await import(/* @vite-ignore */ HEADER_JS);
   await vi.waitFor(() => {
-    expect(navLinks().length).toBe(6);
-    expect(menuNavLinks().length).toBe(6);
+    expect(navLinks().length).toBe(5);
+    expect(menuNavLinks().length).toBe(5);
   });
 }
 
@@ -135,12 +129,6 @@ describe('canonical header.js — active nav follows the route', () => {
     await mountAt(`${MOUNT}/`);
     expect(activeTestids()).toEqual(['header-nav-home']);
     expect(ariaCurrentTestids()).toEqual(['header-nav-home']);
-  });
-
-  it('highlights Stack on the /stack/ board', async () => {
-    await mountAt('/stack/');
-    expect(activeTestids()).toEqual(['header-nav-stack']);
-    expect(ariaCurrentTestids()).toEqual(['header-nav-stack']);
   });
 
   it('re-syncs on SPA pushState (in-form Register → Login link)', async () => {
@@ -194,7 +182,6 @@ describe('canonical header.js — mobile burger menu', () => {
       'header-menu-nav-home',
       'header-menu-nav-login',
       'header-menu-nav-register',
-      'header-menu-nav-stack',
       'header-menu-nav-stage',
       'header-menu-nav-prod',
     ]);
