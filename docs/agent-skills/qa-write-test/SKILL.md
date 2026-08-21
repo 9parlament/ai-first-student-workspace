@@ -19,7 +19,9 @@ RAG (прочитай до кода): `po-fluent`, `po-locators`, `po-step`, `te
 - Новый `ChromeDriver` / setup в тесте
 - E2e на JSON-контракт, если место в `tests/api`
 - `localhost` / prod URL / пароль хаба в Java
-- Деструктивный сценарий без пометки «только pipeline/stage»
+- Деструктивный сценарий на prod без OK / без ADR фичи с фабрикой (`cfg-stands`)
+- Закрывать JaCoCo / RTL / все глаголы HTTP из этого skill (unit/cmp — `qa-make-full-pyramid`)
+- Молчать, если в продукте `/api/note` / note-panel, а в этом модуле нет api/e2e по слоту: в ответе **Дыра**
 - Commit без OK
 
 ## Якоря
@@ -33,7 +35,7 @@ RAG (прочитай до кода): `po-fluent`, `po-locators`, `po-step`, `te
 ## Steps
 
 1. Выбери **один** `@Layer` (чанк `test-layers`). Сомнения api vs e2e — api, если нет UI-состояния.
-2. **Стенды (чанк `cfg-stands`):** этот тест поедет на pipeline (`ci`), stage (`stage`) и/или prod (`prod`)? Данные (сиды) есть на всех? На prod нельзя delete без OK. URL только из config.
+2. **Стенды (чанк `cfg-stands`):** этот тест поедет на pipeline (`ci`), stage (`stage`) и/или prod (`prod`)? Данные (сиды) есть на всех? Сиды на prod не сносить. Фабрика+teardown на prod — только если ADR фичи. URL только из config. Контракт новой фичи — её RAG, не этот skill.
 3. Есть PO/клиент? Расширь его. Нет — создай локаторы в `pages/`, не в тесте.
 4. Класс: `@Layer`, `@Epic`, `@Feature`, `@DisplayName`. Метод: `@Tag` яруса + `positive`/`negative`.
 5. Прогон только этого теста на **pipeline-профиле** (локальный compose):
@@ -46,7 +48,7 @@ cd tests-java-gradle-junit5-allure3-selenide
 ./gradlew test -Denv=ci -DincludeTags=api -Dtest=AuthApiTests#<method>
 ```
 
-6. В ответе: слой, **на каких стендах поедет**, команда, exit code. Не коммитить.
+6. В ответе: слой, **на каких стендах поедет**, команда, exit code. Оставшиеся ярусы фичи — **Дыра**, не писать их сейчас. Не коммитить.
 
 ## DoD
 
@@ -56,6 +58,7 @@ cd tests-java-gradle-junit5-allure3-selenide
 - [ ] Локаторы не в тесте
 - [ ] `@Step` на PO или api-шаги в отчёте
 - [ ] Изолированный Gradle-прогон с `-Denv=ci` (или явно другой env)
+- [ ] Живые дыры фичи названы (не закрыты в этом task)
 - [ ] Нет commit
 
 ## Example prompt
@@ -63,6 +66,6 @@ cd tests-java-gradle-junit5-allure3-selenide
 ```text
 Rules ON. Прочитай docs/agent-skills/qa-write-test/SKILL.md
 и чанки po-fluent, po-step, test-negative, cfg-stands.
-Добавь e2e по образцу LoginTests#shouldShowErrorWhenPasswordIsWrong
-(не дублируй существующий метод). Укажи pipeline/stage/prod. Не коммить.
+Добавь автотест на неуспешный логин с неправильным паролем.
+Укажи pipeline/stage/prod.
 ```
