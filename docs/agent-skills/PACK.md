@@ -53,7 +53,7 @@ CI: глагол в skill (`review`/`create`/`fix`/`run`/`stop`), раннер �
 ## Команда e2e (канон takeaway)
 
 ```bash
-cd tests-java-gradle-junit5-allure3-selenide
+cd tests/java/tests-java-gradle-junit5-allure3-selenide
 ./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 ```
 

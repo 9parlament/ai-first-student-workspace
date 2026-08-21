@@ -21,7 +21,7 @@ RAG: `test-pyramid`, `test-layers`, `test-taxonomy`, `test-api-layer`.
 
 ## Steps
 
-1. Inventory: `tests/e2e|api|manual|testinfra` + `backend-java-spring/src/test` + frontend `*.test.tsx`.
+1. Inventory: `tests/e2e|api|manual|testinfra` + `backend/java/backend/java/backend-java-spring/src/test` + frontend `*.test.tsx`.
 2. Таблица: класс × `@Layer` × `@Tag` × сценарий (DisplayName).
 3. Flows: login / register / logout / home health+items / auth API.
 4. Сверить `AuthApiTests` vs `LoginTests` — где дубль, где дыра.
