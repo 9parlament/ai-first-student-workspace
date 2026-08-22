@@ -10,7 +10,15 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`crud-
 «100% пирамиды» = каждый сценарий на своём `@Layer` (`test-pyramid`).  
 Не 100% строк JaCoCo. Не e2e на все глаголы. Slice (`smoke` / `screenshot` / `mock`) ≠ слой.
 
-Продукт: логин/регистрация + health/items + синглтон `/api/note` и `note-panel`. Ярусы takeaway — после «следующий ярус».
+Продукт **на `main`**: логин/регистрация + health/items. Синглтона `/api/note` и `note-panel` **нет** (ДЗ-1).  
+На `develop` фича влита; ярусы takeaway там закрыты (6/6). Не писать note, сидя на `main`.
+
+## Ветки
+
+| Ветка | `/api/note` в дереве | Ярусы takeaway |
+|-------|----------------------|----------------|
+| `main` | нет | n/a |
+| `develop` | да | 6/6 (лог на той ветке) |
 
 ## ADR
 
@@ -22,8 +30,8 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`crud-
 ## Таблица: сценарий × ярус
 
 Канон HTTP — [`crud-http`](../agent-skills/rag/crud-http.md), не слайд POST+409.  
-Ячейка: `●` = слот этого яруса (теста takeaway ещё нет); `—` = не сюда.  
-Slice (`smoke` / `screenshot` / `mock`) ≠ колонка.
+Таблица — слоты для `/api/note` на **`develop`**, не инвентарь этой ветки. На `main` фичи нет: не кодить note и не считать ● дырами `main`.  
+Ячейка: `●` = слот яруса; `—` = не сюда. Slice ≠ колонка.
 
 | Сценарий | unit | int | cmp | api | e2e | man |
 |----------|:----:|:---:|:---:|:---:|:---:|:---:|
@@ -40,7 +48,8 @@ Slice (`smoke` / `screenshot` / `mock`) ≠ колонка.
 
 Слайд → RFC: нет POST и 409 «already exists»; нет «delete не на prod»; PATCH не в cmp/e2e.
 
-Покрытие takeaway: **0/6 ярусов**. Фича в коде есть. `jacocoPendingNoteClasses` — дыра модуля до яруса **unit** (не шаблон для новых ресурсов). Backend JaCoCo 1.0 на остальном модуле ≠ ярусы пака (`tests-java-…`).
+Покрытие takeaway **на `main`**: note нет в дереве, ярусы note не считаем. `jacocoPendingNoteClasses` в gradle нет — не заводить.  
+На `develop` (upstream): **6/6**, pending-список снят — см. этот файл на `develop`.
 
 ## Лог фаз
 
@@ -50,8 +59,8 @@ Slice (`smoke` / `screenshot` / `mock`) ≠ колонка.
 | 1 | контракт | ADR 006; сначала CRUD-POST | нет | n/a | затем сверка RFC |
 | 1b | канон RFC | RAG `crud-http`; ADR 006 | нет | n/a | POST убран; PUT 201/200 |
 | 1c | SSOT | `crud-http` в monorepo RAG + диета; generic skills без таблицы глаголов | нет | n/a | план ссылается на RAG |
-| 2 | backend | `V3__notes.sql`; `NoteController`/`NoteService`; JaCoCo exclude `jacocoPendingNoteClasses` до яруса unit | `./gradlew test jacocoTestCoverageVerification -DexcludeTags=integration` | 0 | PUT 201/200, PATCH merge-patch, cascade delete; гейт 1.0 на остальном модуле |
-| 3 | frontend | `lib/note.ts`; `note-panel` на Home; stub GET `/api/note` в `HomePage.test` | `npm test` | 0 | Save = PUT; PATCH с UI нет |
+| 2 | backend | продукт note — на `develop` (`V3__notes.sql`, `NoteController`), не в этом checkout | — | n/a | не на `main` |
+| 3 | frontend | `lib/note.ts` / `note-panel` — на `develop`, не в этом checkout | — | n/a | не на `main` |
 | 1d | план | матрица сценарий × ярус под RFC | нет | n/a | убраны POST+409 и «delete не на prod» |
 
 ## Вывод: зачем skills / rules / RAG / ADR
@@ -67,5 +76,6 @@ Slice (`smoke` / `screenshot` / `mock`) ≠ колонка.
 
 ## Что осталось человеку
 
-- Ярусы takeaway — «следующий ярус» (`qa-make-full-pyramid`), по одному чату. Первый = **unit**: тесты модуля + снять `jacocoPendingNoteClasses`.
+- На `main` note не писать (ДЗ-1). Не вызывать `qa-make-full-pyramid` по note с этой ветки.
+- ДЗ-2: checkout `develop`, сверка с отчётом там (upstream — 6/6).
 - Stage / PDF / PR — только явным OK.
