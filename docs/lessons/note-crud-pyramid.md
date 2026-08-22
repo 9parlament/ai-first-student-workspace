@@ -21,21 +21,26 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`crud-
 
 ## Таблица: сценарий × ярус
 
-Ячейка: `—` = не этот ярус; `план` = свой ярус, теста ещё нет; дальше — класс#метод.  
-Слоты по `crud-http` + `test-pyramid`.
+Канон HTTP — [`crud-http`](../agent-skills/rag/crud-http.md), не слайд POST+409.  
+Ячейка: `●` = слот этого яруса (теста takeaway ещё нет); `—` = не сюда.  
+Slice (`smoke` / `screenshot` / `mock`) ≠ колонка.
 
-| Сценарий | Свой ярус | unit | integration | component | api | e2e | manual | Стенды |
-|----------|-----------|:----:|:-----------:|:---------:|:---:|:---:|:------:|--------|
-| PUT create-or-replace: один ряд | unit | план | — | — | — | — | — | n/a (unit) |
-| Persist PUT / GET / PATCH / DELETE | integration | — | план | — | — | — | — | pipeline |
-| Форма title+text, без списка | component | — | — | план | — | — | — | n/a (jsdom) |
-| HTTP PUT 201/200, PATCH, 401/400/404/415/422 | api | — | — | — | план | — | — | pipeline / stage / prod (delete — фабрика, не `user1`) |
-| Пользователь сохраняет и видит заметку | e2e | — | — | — | — | план | — | pipeline / stage; prod — узкий smoke, не все глаголы |
-| Delete / destructive UX | manual + api | — | — | — | план* | — | план | api DELETE: все стенды; фабрика + teardown |
+| Сценарий | unit | int | cmp | api | e2e | man |
+|----------|:----:|:---:|:---:|:---:|:---:|:---:|
+| Пустой `text` → 400 | ● | — | — | ● схема ошибки | — | — |
+| PUT create persist | ● create vs replace, **не 409** | ● HTTP+DB | — | ● **201** + `Content-Location` | — | — |
+| GET 200 / 404 | ● маппинг DTO | ● | ● текст / empty | ● (+ чужой JWT = свой 404) | ● один happy-path: логин → вижу/создаю (**PUT**) | — |
+| Update | ● PUT replace; PATCH merge (`title:null`→`""`, `text:null`→**422**, `{}` no-op) | ● | ● форма edit = **PUT**, PATCH нет | ● PUT **200**; PATCH **200** / **415** / **422** / 404 | — | — |
+| Delete | — | ● 204 потом 404 | ● empty state | ● 204 / 404; prod — фабрика, не `user1` | — | ● exploratory; prod — тот же api, teardown |
+| 401 без токена | — | — (chain `/api/**` уже есть) | — | ● | не дублировать | — |
+| Текст ошибки в UI | — | — | ● | — | только если api не ловит UX | — |
+| Длинный текст / XSS / гонки | — | — | — | лимиты 120/2000 → 400 | — | ● XSS, гонки (PUT идемпотентен, не 409) |
 
-\* api-delete — тот же ярус `api`. PATCH vs PUT — тоже `api`, не два e2e.
+Стенды: unit/cmp — n/a; int — pipeline; api — pipeline / stage / prod (delete с фабрикой); e2e — pipeline / stage, prod только `e2e & smoke`; man — не сид `user1`.
 
-Покрытие takeaway: **0/6 ярусов**. Фича в коде есть. Backend unit/integration под JaCoCo — quality gate модуля, не ярусы пака (`tests-java-…`).
+Слайд → RFC: нет POST и 409 «already exists»; нет «delete не на prod»; PATCH не в cmp/e2e.
+
+Покрытие takeaway: **0/6 ярусов**. Фича в коде есть. `jacocoPendingNoteClasses` — дыра модуля до яруса **unit** (не шаблон для новых ресурсов). Backend JaCoCo 1.0 на остальном модуле ≠ ярусы пака (`tests-java-…`).
 
 ## Лог фаз
 
@@ -45,8 +50,9 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`crud-
 | 1 | контракт | ADR 006; сначала CRUD-POST | нет | n/a | затем сверка RFC |
 | 1b | канон RFC | RAG `crud-http`; ADR 006 | нет | n/a | POST убран; PUT 201/200 |
 | 1c | SSOT | `crud-http` в monorepo RAG + диета; generic skills без таблицы глаголов | нет | n/a | план ссылается на RAG |
-| 2 | backend | `V3__notes.sql`; `NoteController`/`NoteService`; JaCoCo-тесты модуля | `./gradlew test jacocoTestCoverageVerification` | 0 | PUT 201/200, PATCH merge-patch, cascade delete |
+| 2 | backend | `V3__notes.sql`; `NoteController`/`NoteService`; JaCoCo exclude `jacocoPendingNoteClasses` до яруса unit | `./gradlew test jacocoTestCoverageVerification -DexcludeTags=integration` | 0 | PUT 201/200, PATCH merge-patch, cascade delete; гейт 1.0 на остальном модуле |
 | 3 | frontend | `lib/note.ts`; `note-panel` на Home; stub GET `/api/note` в `HomePage.test` | `npm test` | 0 | Save = PUT; PATCH с UI нет |
+| 1d | план | матрица сценарий × ярус под RFC | нет | n/a | убраны POST+409 и «delete не на prod» |
 
 ## Вывод: зачем skills / rules / RAG / ADR
 
@@ -61,5 +67,5 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`crud-
 
 ## Что осталось человеку
 
-- Ярусы takeaway — «следующий ярус» (`qa-make-full-pyramid`), по одному чату.
-- Stage / PDF / PR — только явным OK. Commit — тоже.
+- Ярусы takeaway — «следующий ярус» (`qa-make-full-pyramid`), по одному чату. Первый = **unit**: тесты модуля + снять `jacocoPendingNoteClasses`.
+- Stage / PDF / PR — только явным OK.

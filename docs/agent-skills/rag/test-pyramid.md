@@ -16,7 +16,7 @@ tags: [pyramid, layer, slice]
 
 | `@Layer` | Где код | Зачем |
 |----------|---------|--------|
-| unit | `backend/java/backend/java/backend-java-spring/src/test` (без `@Tag("integration")`) | логика без HTTP/браузера; JaCoCo |
+| unit | `backend/java/backend-java-spring/src/test` (без `@Tag("integration")`) | логика без HTTP/браузера; JaCoCo |
 | integration | тот же `backend-…/src/test`, `@Tag("integration")` | Spring + Testcontainers |
 | component | `frontend/typescript/frontend-typescript-react/` Vitest + RTL | UI-компонент в jsdom, не Selenide |
 | api | `tests/…/tests/api/` | HTTP, Rest Assured, `ApiTestBase` |
