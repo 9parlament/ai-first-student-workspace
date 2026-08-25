@@ -15,7 +15,7 @@
 | RAG | `docs/agent-skills/rag/<id>.md` | факты (2–4 файла на задачу) |
 | ADR | `docs/adr/` + цитата в skill | почему (занятие 4) |
 
-Листы A4: [docs/handouts/](../handouts/) — общая карта, по слою, стеки наращивания, login A/B (20–24), абляция (30–35), лаборатория ([36](../handouts/36-login-lab.html)), ДЗ main→develop ([40](../handouts/index.html#40-homework)). Словарь AI-стека: [50](../handouts/50-glossary.html). Промпты: [HOMEWORK.md](../../HOMEWORK.md).
+Листы A4: [lab.qa.guru](https://lab.qa.guru/) — общая карта, по слою, стеки наращивания, login A/B (20–24), абляция (30–35), лаборатория ([36](https://lab.qa.guru/36-login-lab.html)), ДЗ main→develop ([40](https://lab.qa.guru/#40-homework)). Словарь AI-стека: [50](https://lab.qa.guru/50-glossary.html). Промпты: [HOMEWORK.md](../../HOMEWORK.md).
 
 ## Skills
 

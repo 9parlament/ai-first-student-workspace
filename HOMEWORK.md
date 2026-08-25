@@ -6,7 +6,7 @@
 
 Свой DNS/nginx — **опционально**, отдельный task: skill `qa-setup-host` + RAG `cfg-host`. Витрина курса уже на [ai-first.autotests.ai](https://ai-first.autotests.ai/).
 
-Лист A4: [docs/handouts/index.html#40-homework](docs/handouts/index.html#40-homework).
+Лист A4: [lab.qa.guru/#40-homework](https://lab.qa.guru/#40-homework).
 
 ---
 
