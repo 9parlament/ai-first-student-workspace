@@ -26,6 +26,7 @@ HTTP-глаголы **не дублировать** здесь — SSOT: [`crud-
 |-----|--------|------|
 | [005](../adr/005-screenshot-not-layer.md) | принято | screenshot/mock/smoke — slice, не `@Layer` |
 | [006](../adr/006-one-note-not-list.md) | **принято** | синглтон `/api/note`; RFC не POST+409; delete на prod — фабрика |
+| [009](../adr/009-login-401-is-api.md) | принято | wrong password: UI-текст e2e, 401 JSON уже api |
 
 ## Таблица: сценарий × ярус
 

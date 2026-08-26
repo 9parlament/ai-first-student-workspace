@@ -1,7 +1,6 @@
 ---
 id: allure-reporting-requirements
 domain: testing
-adr: 002
 tags: [allure, layer, quality]
 related: [allure-attach, po-step]
 ---

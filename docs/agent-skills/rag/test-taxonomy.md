@@ -1,7 +1,6 @@
 ---
 id: test-taxonomy
 domain: testing
-adr: 002
 tags: [allure, epic, feature, tag, tms]
 related: [tms-meta]
 ---

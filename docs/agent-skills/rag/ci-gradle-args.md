@@ -1,7 +1,6 @@
 ---
 id: ci-gradle-args
 domain: config
-adr: 002
 tags: [gradle, tags, env]
 ---
 # Gradle-команды takeaway
@@ -25,7 +24,7 @@ tags: [gradle, tags, env]
 ```bash
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
 
-# e2e на занятии (шире prod-smoke). Task testE2e нет.
+# e2e на занятии (шире prod-smoke).
 # @Tag("smoke") есть на узких методах — для prod slice, не вместо этой команды.
 ./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 
@@ -49,6 +48,4 @@ Allure results: `build/allure-results`. Отчёт: `npx allure serve build/allu
 ## Don't
 
 - `./gradlew test` без `-DincludeTags` на задаче «smoke / e2e».
-- Выдумывать task `testE2e` — в takeaway его нет.
-- Путать `@Tag("smoke")` (slice) с ярусом `@Layer("e2e")`.
-- Хардкодить URL в тесте — только `-Denv` / properties.
+- Путать `@Tag("smoke")` с ярусом — ADR 005. URL в Java — rule 03.

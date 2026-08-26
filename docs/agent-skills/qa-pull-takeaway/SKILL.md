@@ -19,10 +19,9 @@ Upstream курса: [qa-guru/ai-first-student-workspace](https://github.com/qa-
 ## Do not
 
 - `git reset --hard` / `git pull` вслепую поверх своих rules/skills/тестов
-- Копировать matrix `ci.yml`, пути `/stack/…`, task `testE2e`
+- Копировать matrix `ci.yml`, пути `/stack/…`, выдуманный Gradle-task (rule 01: один `test` + tags)
 - Затирать `.clinerules/`, `docs/agent-skills/`, `AGENTS.md`, свои `docs/adr/`
 - Менять `baseUrl` в Java
-- Commit / push без OK
 
 ## Steps
 
@@ -47,9 +46,8 @@ Upstream курса: [qa-guru/ai-first-student-workspace](https://github.com/qa-
 
 - [ ] Нет hard reset
 - [ ] Учебные files живы
-- [ ] Нет matrix-путей и нет task `testE2e`
+- [ ] Нет matrix-путей и нет выдуманного Gradle-task (rule 01)
 - [ ] Таблица adopt/skip
-- [ ] Нет commit без OK
 
 ## Example prompt
 

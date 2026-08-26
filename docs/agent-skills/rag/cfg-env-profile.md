@@ -1,7 +1,6 @@
 ---
 id: cfg-env-profile
 domain: config
-adr: 002
 tags: [env, properties]
 ---
 # Выбор стенда

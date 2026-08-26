@@ -1,7 +1,6 @@
 ---
 id: ci-github-actions
 domain: config
-adr: 002
 tags: [ci, github-actions]
 related: [ci-gradle-args, cfg-stands, test-pyramid]
 ---

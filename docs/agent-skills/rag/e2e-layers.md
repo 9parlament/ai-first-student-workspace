@@ -1,7 +1,6 @@
 ---
 id: e2e-layers
 domain: testing
-adr: 002
 tags: [structure, testbase, pages]
 ---
 # Слои тестового модуля

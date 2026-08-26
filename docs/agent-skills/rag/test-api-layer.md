@@ -1,8 +1,9 @@
 ---
 id: test-api-layer
 domain: testing
-adr: 004
+adr: 009
 tags: [api, rest-assured]
+related: [test-negative, test-layers, cfg-stands]
 ---
 # API слой
 
@@ -10,6 +11,9 @@ tags: [api, rest-assured]
 
 Канон: `api/ApiTestBase.java`, `api/AuthApiClient.java`, `tests/api/AuthApiTests.java`.  
 `@Layer("api")` + `@Tag("api")`. Браузера нет.
+
+Wrong password на HTTP: `AuthApiTests#loginWithInvalidPassword` — 401 + `schemas/error.json` + `"Wrong login or password"`.  
+Почему это не новый e2e-клик — ADR `009-login-401-is-api`.
 
 ```bash
 ./gradlew test -Denv=ci -DincludeTags=api

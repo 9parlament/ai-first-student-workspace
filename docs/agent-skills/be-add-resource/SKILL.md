@@ -24,7 +24,6 @@ ADR модуля: `docs/adr/007-backend-api-only.md`. Если фича уже �
 - Писать тесты в `tests/java/tests-java-gradle-junit5-allure3-selenide` в этом вызове
 - Понижать JaCoCo 1.0. Заводить или расширять `jacocoPendingNoteClasses`
 - Молчать, если тестов модуля нет: в ответе **Дыра**
-- Commit без OK
 
 ## Якоря
 
@@ -61,7 +60,6 @@ cd backend/java/backend-java-spring
 - [ ] Тесты модуля есть; JaCoCo verification зелёный; pending-exclude не заведён
 - [ ] На `main` не ставить дыру «заметка без unit» — `/api/note` на этой ветке нет
 - [ ] Нет кода в `tests-java-…`
-- [ ] Нет commit
 
 ## Example prompt
 

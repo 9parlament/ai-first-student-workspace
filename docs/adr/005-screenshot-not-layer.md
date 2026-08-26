@@ -11,7 +11,7 @@
 
 1. Классы `*ScreenshotTests` остаются `@Layer("e2e")`.
 2. Отбор: `@Tag("screenshot")` + `-Denv=mock` или `stage` + job `ui-mock-tests` / stage screenshots.
-3. `@Tag("smoke")` — тоже slice (узкий прод), не ярус. Gradle-task `testE2e` в takeaway нет.
+3. `@Tag("smoke")` — тоже slice (узкий прод), не ярус.
 4. Mock UI (`-Denv=mock`) — slice, не api-слой.
 
 ## Последствия

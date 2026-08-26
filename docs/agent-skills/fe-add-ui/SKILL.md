@@ -25,7 +25,6 @@ ADR: `docs/adr/008-frontend-ds-not-fork.md`. Фича-заметка — ещё 
 - Писать Java PO / e2e в этом вызове
 - Считать stub `GET 404` покрытием новой панели; понижать пол в `vitest.config.ts`
 - Молчать, если у нового UI нет RTL-assert сценария: в ответе **Дыра**
-- Commit без OK
 
 ## Якоря
 
@@ -56,7 +55,6 @@ ADR: `docs/adr/008-frontend-ds-not-fork.md`. Фича-заметка — ещё 
 - [ ] RTL зелёный; vendor не изменён; пол coverage не снижен
 - [ ] Живая дыра (новый UI без RTL-сценария) названа, не закрыта чужим ярусом. На `main` не ставить дыру note-panel.
 - [ ] Нет кода в `tests-java-…`
-- [ ] Нет commit
 
 ## Example prompt
 

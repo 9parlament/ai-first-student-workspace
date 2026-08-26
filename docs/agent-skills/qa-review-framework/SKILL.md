@@ -17,7 +17,7 @@ RAG: `e2e-layers`, `base-lifecycle`, `po-locators`, `test-pyramid`, `allure-repo
 
 - Переписывать стек в том же task
 - Предлагать TestNG / Cucumber «потому что привык»
-- Commit / массовый refactor без OK
+- Массовый refactor без OK
 
 ## Что пройти (чеклист)
 
@@ -26,7 +26,7 @@ RAG: `e2e-layers`, `base-lifecycle`, `po-locators`, `test-pyramid`, `allure-repo
 3. Локаторы только в PO (`data-testid`).
 4. `@Layer` + `@Tag` согласованы; screenshot не выдаётся за ярус.
 5. Allure: steps на e2e/api; results в `build/allure-results`.
-6. Стенды: `ci` (pipeline) / `prod`; stage-файла может не быть — это находка, не баг кода. URL не в тестах. Деструктивные тесты без ограничения стенда — must.
+6. Стенды: `ci` (pipeline) / `prod`; stage-файла может не быть — это находка, не баг кода. URL захардкожен в тестах — must (rule 03). Деструктивные тесты без ограничения стенда — must.
 
 ## Формат ответа
 
