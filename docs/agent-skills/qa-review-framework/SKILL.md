@@ -21,7 +21,7 @@ RAG: `e2e-layers`, `base-lifecycle`, `po-locators`, `test-pyramid`, `allure-repo
 
 ## Что пройти (чеклист)
 
-1. Пакеты: `config/`, `pages/`, `api/`, `tests/e2e|api|manual|testinfra/` — чанк `e2e-layers`.
+1. Пакеты: `config/`, `pages/`, `api/`, `tests/e2e|api|manual|infra/` — чанк `e2e-layers`.
 2. Lifecycle: `TestBase` vs `ApiTestBase` — нет setup в `@Test`.
 3. Локаторы только в PO (`data-testid`).
 4. `@Layer` + `@Tag` согласованы; screenshot не выдаётся за ярус.

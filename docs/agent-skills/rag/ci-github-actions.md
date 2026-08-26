@@ -18,17 +18,17 @@ related: [ci-gradle-args, cfg-stands, test-pyramid]
 ```
 backend-unit-tests → integration-tests → build-backend
 frontend-unit-tests ─┐
-tests-harness ───────┴→ ui-mock-tests → build-frontend
-tests-harness → api-tests-stage / api-tests / e2e-tests-stage / e2e-tests
+infra-tests ───────┴→ ui-mock-tests → build-frontend
+infra-tests → api-tests-stage / api-tests / e2e-tests-stage / e2e-tests
 build-* → deploy-backend-stage / deploy-frontend-stage
   → api-tests-stage → e2e-tests-stage
   → deploy-backend / deploy-frontend → api-tests → e2e-tests
 publish-allure-report (всегда собирает артефакты; Pages — soft)
 ```
 
-`tests-harness` = `testinfra/` (не слой пирамиды). Красный harness не гоняет mock/api/e2e. Не встраивать шагом внутрь api/e2e — там другой `-DincludeTags` и чужой JaCoCo.
+`infra-tests` = `tests/infra/` (не слой пирамиды). Красный job `infra-tests` не гоняет mock/api/e2e. Не встраивать шагом внутрь api/e2e — там другой `-DincludeTags` и чужой JaCoCo.
 
-PR: unit / integration / harness / mock. `build-*` и `deploy-*` — `main` / `workflow_dispatch`.  
+PR: unit / integration / infra / mock. `build-*` и `deploy-*` — `main` / `workflow_dispatch`.  
 Deploy skip, если `DEPLOY_HOST` / `STAGE_HOST` пустые.  
 Pipeline api/e2e (`-Denv=ci`) — локально (`qa-run-stand`), не job CI. Job `api-tests` / `e2e-tests` = **prod** после SSH.
 

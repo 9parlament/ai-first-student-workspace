@@ -18,7 +18,7 @@ tags: [structure, testbase, pages]
 | `tests/e2e/` | браузерные сценарии, `TestBase` |
 | `tests/api/` | HTTP-сценарии, `ApiTestBase` |
 | `tests/manual/` | exploratory stubs |
-| `tests/testinfra/` | harness |
+| `tests/infra/` | helpers (config / HAR / CSS; не слой пирамиды) |
 | `allure/` | attachments |
 | `annotations/` | `@Layer`, `@Manual` |
 

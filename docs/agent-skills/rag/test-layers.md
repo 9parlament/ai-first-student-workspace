@@ -16,7 +16,7 @@ related: [test-pyramid, ci-gradle-args]
 | e2e | `e2e` | `./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock` |
 | api | `api` | `./gradlew test -Denv=ci -DincludeTags=api` |
 | manual | `manual` | `./gradlew test -Denv=ci -DincludeTags=manual` |
-| harness | `harness` | `./gradlew test -Denv=ci -DincludeTags=harness` |
+| infra | `infra` | `./gradlew test -Denv=ci -DincludeTags=infra` |
 
 Backend / frontend — другие каталоги, не этот `./gradlew`:
 

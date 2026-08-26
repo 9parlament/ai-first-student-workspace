@@ -22,7 +22,7 @@ tags: [pyramid, layer, slice]
 | api | `tests/…/tests/api/` | HTTP, Rest Assured, `ApiTestBase` |
 | e2e | `tests/…/tests/e2e/` | браузер, Page Object, `TestBase` |
 | manual | `tests/…/tests/manual/` | `@Manual` + `Allure.step`, не WebDriver |
-| harness | `tests/…/tests/testinfra/` | config / HAR / CSS — инфра тестов |
+| infra | `tests/…/tests/infra/` | config / HAR / CSS — инфра тестов |
 
 Gradle-task `testE2e` в takeaway **нет**. Срез яруса = `-DincludeTags=<имя>`.
 
