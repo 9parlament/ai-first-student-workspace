@@ -14,6 +14,7 @@ tags: [structure, testbase, pages]
 | `config/` | env profiles, typed keys |
 | `api/` | `ApiTestBase`, HTTP-клиенты |
 | `pages/` | Page Objects, локаторы, `@Step` |
+| `helpers/` | `User` / `UserBuilder` / `DataFaker` — throwaway, не сид (чанк `testdata-user`) |
 | `tests/e2e/` | браузерные сценарии, `TestBase` |
 | `tests/api/` | HTTP-сценарии, `ApiTestBase` |
 | `tests/manual/` | exploratory stubs |

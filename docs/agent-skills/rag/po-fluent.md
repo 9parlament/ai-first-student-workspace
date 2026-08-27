@@ -2,7 +2,7 @@
 id: po-fluent
 domain: testing
 tags: [selenide, pageobject]
-related: [po-locators, po-step, test-negative]
+related: [po-locators, po-step, test-negative, testdata-user]
 ---
 # Fluent Page Object
 
@@ -15,6 +15,8 @@ loginPage.openPage()
         .fillAndSubmitForm("user1", "password1")
         .shouldHaveWelcomeMessage("Welcome, user1!");
 ```
+
+Литералы в сниппете — сид стенда, не `UserBuilder` (чанк `testdata-user`).
 
 ## Do
 

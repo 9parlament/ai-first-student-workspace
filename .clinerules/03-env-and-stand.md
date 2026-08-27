@@ -19,7 +19,8 @@ paths:
 - Перед ci: `docker compose up -d --build`. Health: `curl -sf http://localhost:8800/api/health`. UI: `http://localhost:9821/` (не `:9811`).
 - Prod без рабочего `-DremoteUrl` — не гонять.
 - На prod: сиды (`user1`) не сносить. Delete/drop по умолчанию нельзя; фабрика+teardown — только если ADR фичи (`cfg-stands`).
+- Сид `user1` / `password1` в тесте — литералы, не `UserBuilder` (`testdata-user`).
 - «Зелёный только на localhost» ≠ готово к merge.
 - Не удалять `build/allure-results` без OK.
 
-RAG: `docs/agent-skills/rag/cfg-stands.md`
+RAG: `docs/agent-skills/rag/cfg-stands.md` · `docs/agent-skills/rag/testdata-user.md`

@@ -18,6 +18,7 @@ Retrieval-единицы **для учебного репо студента**. 
 | `test-layers` | [test-layers.md](test-layers.md) | `@Layer` → Gradle `-DincludeTags` |
 | `e2e-layers` | [e2e-layers.md](e2e-layers.md) | config / TestBase / pages / tests |
 | `po-fluent` | [po-fluent.md](po-fluent.md) | цепочка PO, `return this` |
+| `testdata-user` | [testdata-user.md](testdata-user.md) | сид `user1` литералами vs `UserBuilder` на register |
 | `po-locators` | [po-locators.md](po-locators.md) | селекторы только в PO |
 | `po-step` | [po-step.md](po-step.md) | `@Step` на методах страницы |
 | `test-negative` | [test-negative.md](test-negative.md) | negative login: `submitExpectingError`, текст ошибки |

@@ -3,7 +3,7 @@ id: test-negative
 domain: testing
 adr: 009
 tags: [negative, login]
-related: [po-locators, po-step, cfg-stands]
+related: [po-locators, po-step, cfg-stands, testdata-user]
 ---
 # Negative login
 
@@ -22,7 +22,7 @@ loginPage.openPage()
 Текст ошибки — константа в тесте (`WRONG_CREDENTIALS_MESSAGE`).  
 `fillAndSubmitForm` сюда нельзя: он ждёт `HomePage`, а не сообщение на форме.
 
-Empty username / empty password — те же `type*` + `submitExpectingError`, другие константы в `LoginTests`.
+Empty username / empty password — те же `type*` + `submitExpectingError`, другие константы в `LoginTests`. Empty username: `typePassword("password1")` — литерал длины, не `UserBuilder` (чанк `testdata-user`).
 
 ## Do
 
@@ -33,3 +33,4 @@ Empty username / empty password — те же `type*` + `submitExpectingError`, 
 
 - Inline `$("input")` в negative-тесте.
 - «Invalid credentials» / «Unauthorized» — в UI другая строка.
+- Собирать `User` для кейса, где пользователя нет (чанк `testdata-user`).

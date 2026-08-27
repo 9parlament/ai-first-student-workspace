@@ -18,6 +18,7 @@ description: >-
 | UI / PO | `po-locators` · `po-fluent` · `po-step` |
 | negative login | `po-locators` · `po-step` · `test-negative` · `cfg-stands` |
 | JSON-контракт | `test-api-layer` · `cfg-stands` |
+| сид vs фабрика | `testdata-user` · `cfg-stands` |
 
 Для промпта «неуспешный логин с неправильным паролем» — **вторая строка** (ровно 4).  
 Развилка 401 JSON vs текст на форме — ADR `docs/adr/009-login-401-is-api.md`, не этот skill.
@@ -38,7 +39,7 @@ Api vs e2e на 401 — **ADR 009**, не решай в чате.
 |------|---------|
 | e2e | `tests/e2e/LoginTests`, `pages/LoginPage` (`data-testid`) |
 | api | `tests/api/AuthApiTests`, `api/AuthApiClient` |
-| fluent happy | `loginPage.openPage().fillAndSubmitForm("user1", "password1")` |
+| fluent happy | `loginPage.openPage().fillAndSubmitForm("user1", "password1")` — сид, чанк `testdata-user` |
 | fluent negative | `typeUsername` → `typePassword` → `submitExpectingError` (чанк `test-negative`) |
 
 ## Steps

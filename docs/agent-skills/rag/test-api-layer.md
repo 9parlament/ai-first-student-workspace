@@ -3,7 +3,7 @@ id: test-api-layer
 domain: testing
 adr: 009
 tags: [api, rest-assured]
-related: [test-negative, test-layers, cfg-stands]
+related: [test-negative, test-layers, cfg-stands, testdata-user]
 ---
 # API слой
 
@@ -28,3 +28,4 @@ Wrong password на HTTP: `AuthApiTests#loginWithInvalidPassword` — 401 + `sch
 
 - `@Layer("api")` + `TestBase` / Selenide.
 - Проверять JSON-контракт логина только кликами в UI.
+- Логин сида через `UserBuilder` — литералы `"user1"` / `"password1"` (чанк `testdata-user`).
