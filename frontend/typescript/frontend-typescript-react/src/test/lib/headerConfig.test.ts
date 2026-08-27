@@ -1,10 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ru } from '../../i18n';
-import {
-  buildHeaderConfig,
-  headerConfig,
-  syncHeaderNav,
-} from '../../lib/headerConfig';
+import { buildHeaderConfig, headerConfig, syncHeaderNav } from '../../lib/headerConfig';
 
 describe('buildHeaderConfig', () => {
   it('keeps testids and hrefs stable across en/ru and only changes labels', () => {
