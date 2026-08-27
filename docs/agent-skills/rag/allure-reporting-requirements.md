@@ -1,7 +1,6 @@
 ---
 id: allure-reporting-requirements
 domain: testing
-adr: 002
 tags: [allure, layer, quality]
 related: [allure-attach, po-step]
 ---
@@ -11,7 +10,7 @@ related: [allure-attach, po-step]
 
 | `@Layer` | Steps | Attachments |
 |----------|-------|-------------|
-| harness / unit | опционально | не требуются |
+| infra / unit | опционально | не требуются |
 | api | обязательно (клиент / `Allure.step`) | Rest Assured listener в `ci` |
 | e2e | обязательно (PO `@Step`) | screenshot — по флагу env |
 | manual | обязательно (`Allure.step`) | не браузер |

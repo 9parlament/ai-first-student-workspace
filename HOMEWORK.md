@@ -6,7 +6,7 @@
 
 Свой DNS/nginx — **опционально**, отдельный task: skill `qa-setup-host` + RAG `cfg-host`. Витрина курса уже на [ai-first.autotests.ai](https://ai-first.autotests.ai/).
 
-Лист A4: [docs/handouts/index.html#40-homework](docs/handouts/index.html#40-homework).
+Лист A4: [lab.qa.guru/#40-homework](https://lab.qa.guru/#40-homework).
 
 ---
 
@@ -50,7 +50,7 @@ docker compose up -d --build
 curl -sf http://localhost:8800/api/health
 UI: http://localhost:9821/ (не :9811)
 
-4) Учебный e2e (нет task testE2e; @Tag("smoke") — prod slice, не эта команда):
+4) Учебный e2e (срез = `-DincludeTags`; `@Tag("smoke")` — prod slice, не эта команда):
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
 ./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 

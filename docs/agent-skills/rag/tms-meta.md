@@ -1,7 +1,6 @@
 ---
 id: tms-meta
 domain: testing
-adr: 002
 tags: [allure, testops, jira, tms]
 related: [test-taxonomy, test-layers]
 ---

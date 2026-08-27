@@ -11,12 +11,13 @@ cd tests/java/tests-java-gradle-junit5-allure3-selenide
 ./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
 ```
 
-Нет `testE2e` и `@Tag("smoke")`. Срез = `@Tag("e2e")`. App: compose + gateway `:9821`, health `:8800`.
+Нет Gradle-task `testE2e` (rule 01). Срез занятия = `@Tag("e2e")` минус screenshot/mock. `@Tag("smoke")` — prod slice, не эта команда (ADR 005). App: compose + gateway `:9821`, health `:8800`.
 
 ## Ограничения
 
-- Не `git commit` / `git push` без явной просьбы.
+- Не `git commit` / `git push` / `git reset --hard` без явной просьбы.
 - Не удаляй `build/allure-results` без OK.
+- Один task = один `@Layer` (rule 04).
 - Fix тестов — только после triage и OK человека.
 - Прод-стенд только `-Denv=prod` + рабочий remoteUrl.
 - Новый автотест обязан быть годен для **pipeline / stage / prod** (URL из properties, не localhost в коде). RAG: `docs/agent-skills/rag/cfg-stands.md`.

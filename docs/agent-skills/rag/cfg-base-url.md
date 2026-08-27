@@ -1,7 +1,6 @@
 ---
 id: cfg-base-url
 domain: config
-adr: 002
 tags: [baseUrl, apiBaseUrl]
 ---
 # baseUrl и apiBaseUrl

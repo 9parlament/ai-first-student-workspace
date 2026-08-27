@@ -10,7 +10,7 @@ Retrieval-единицы **для учебного репо студента**. 
 ## Как читать
 
 Один чанк = один `id`. Агент читает **2–4 файла**, не всю папку.  
-Лист A4: [03-rag](../../handouts/index.html#03-rag) · карта слоёв: [docs/handouts/](../../handouts/).
+Лист A4: [03-rag](https://lab.qa.guru/#03-rag) · карта слоёв: [lab.qa.guru](https://lab.qa.guru/).
 
 | id | Файл | Когда |
 |----|------|--------|
@@ -20,7 +20,7 @@ Retrieval-единицы **для учебного репо студента**. 
 | `po-fluent` | [po-fluent.md](po-fluent.md) | цепочка PO, `return this` |
 | `po-locators` | [po-locators.md](po-locators.md) | селекторы только в PO |
 | `po-step` | [po-step.md](po-step.md) | `@Step` на методах страницы |
-| `test-negative` | [test-negative.md](test-negative.md) | negative login |
+| `test-negative` | [test-negative.md](test-negative.md) | negative login: `submitExpectingError`, текст ошибки |
 | `test-taxonomy` | [test-taxonomy.md](test-taxonomy.md) | Epic / Feature / Tag |
 | `tms-meta` | [tms-meta.md](tms-meta.md) | `@AllureId` / `@Issue` |
 | `quality-gates` | [quality-gates.md](quality-gates.md) | JaCoCo / Sonar ≠ пирамида; pending exclude не шаблон |
@@ -38,7 +38,7 @@ Retrieval-единицы **для учебного репо студента**. 
 | `hw-check-ai-first` | [hw-check-ai-first.md](hw-check-ai-first.md) | рубрика занятий 2–4 |
 | `hw-check-voice` | [hw-check-voice.md](hw-check-voice.md) | тон комментария к сдаче |
 | `remote-selenoid` | [remote-selenoid.md](remote-selenoid.md) | браузер на хабе |
-| `test-api-layer` | [test-api-layer.md](test-api-layer.md) | Rest Assured, не Selenide |
+| `test-api-layer` | [test-api-layer.md](test-api-layer.md) | Rest Assured; 401 логина — факт, почему не клик — ADR 009 |
 | `crud-http` | [crud-http.md](crud-http.md) | HTTP CRUD: PUT 201/200, PATCH merge-patch; POST только на коллекции (SSOT: monorepo `docs/rag/testing/crud-http.md`) |
 | `base-lifecycle` | [base-lifecycle.md](base-lifecycle.md) | `TestBase` setup/teardown |
 | `be-spring-layers` | [be-spring-layers.md](be-spring-layers.md) | пакеты Spring + Flyway; skill `be-add-resource` |

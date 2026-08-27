@@ -28,12 +28,11 @@ description: >-
 - Реализовывать фичу (нет кода → STOP, отдай `be-add-resource` / `fe-add-ui`)
 - Два яруса в одном вызове; «добить всё»
 - Подменять `qa-write-test` / `qa-coverage-audit`
-- E2e на все HTTP-глаголы; `@Layer("screenshot")`; smoke как ярус
+- E2e на все HTTP-глаголы; `@Layer("screenshot")` (ADR 005); smoke как ярус
 - Выдумывать контракт (не читая RAG фичи)
-- `localhost` / prod URL в Java
+- URL в Java — rule 03
 - Чинить чужие тесты «заодно»
 - Заводить или расширять `jacocoPendingNoteClasses`; снимать exclude до зелёных тестов unit
-- Commit без OK
 
 ## RAG (на вызов — 2–4 id, не все сразу)
 
@@ -48,7 +47,7 @@ description: >-
 | e2e | `test-pyramid`, RAG фичи, `cfg-stands` (+ `qa-write-test` и его RAG) |
 | manual | `test-pyramid`, `cfg-stands`, `adr-when` |
 
-Пример takeaway (заметка): RAG = `crud-http`; ADR = `docs/adr/006-one-note-not-list.md`. Slice: `docs/adr/005-screenshot-not-layer.md`.
+Пример takeaway (заметка): RAG = `crud-http`; ADR = `docs/adr/006-one-note-not-list.md`. Slice: `docs/adr/005-screenshot-not-layer.md`. Login 401: `docs/adr/009-login-401-is-api.md`.
 
 ## Якоря (образец слоя, не дописывать чужой фиче)
 
@@ -99,7 +98,6 @@ description: >-
 - [ ] Если в gradle был pending-exclude по этой фиче: список снят, verification 1.0 зелёный
 - [ ] Оставшиеся дыры названы; этот ярус не закрыл чужие
 - [ ] Отчёт обновлён, если файл есть
-- [ ] Нет commit без OK
 - [ ] Следующий ярус не начат
 
 ## Example prompt
@@ -108,5 +106,5 @@ description: >-
 Rules ON. Прочитай docs/agent-skills/qa-make-full-pyramid/SKILL.md
 и 2–4 RAG текущего яруса. На main /api/note нет — STOP.
 На develop ярусы note уже 6/6 — не открывай unit заново.
-Если есть живая дыра другой фичи: один ярус, не коммить, STOP.
+Если есть живая дыра другой фичи: один ярус, STOP.
 ```

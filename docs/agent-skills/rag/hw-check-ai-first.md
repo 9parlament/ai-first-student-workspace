@@ -27,7 +27,7 @@ related: [hw-check-verdict, adr-when]
 | Критерий | Вес |
 |----------|-----|
 | Sync: adopt/skip, rules не затёрты | 25% |
-| CI: job → слой, команды как в YAML, не `testE2e` | 30% |
+| CI: job → слой, команды как в YAML (срез = `-DincludeTags`, rule 01) | 30% |
 | RAG: 2–4 чанка, не вся папка | 30% |
 | Артефакты | 15% |
 

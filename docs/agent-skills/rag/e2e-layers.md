@@ -1,7 +1,6 @@
 ---
 id: e2e-layers
 domain: testing
-adr: 002
 tags: [structure, testbase, pages]
 ---
 # Слои тестового модуля
@@ -18,7 +17,7 @@ tags: [structure, testbase, pages]
 | `tests/e2e/` | браузерные сценарии, `TestBase` |
 | `tests/api/` | HTTP-сценарии, `ApiTestBase` |
 | `tests/manual/` | exploratory stubs |
-| `tests/testinfra/` | harness |
+| `tests/infra/` | helpers (config / HAR / CSS; не слой пирамиды) |
 | `allure/` | attachments |
 | `annotations/` | `@Layer`, `@Manual` |
 

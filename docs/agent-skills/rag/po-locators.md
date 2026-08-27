@@ -1,8 +1,8 @@
 ---
 id: po-locators
 domain: testing
-adr: 002
 tags: [selenide, locators]
+related: [po-fluent, po-step]
 ---
 # Селекторы только в PO
 
@@ -12,6 +12,7 @@ tags: [selenide, locators]
 
 ```java
 private final SelenideElement loginInput = $("[data-testid='login-input']");
+private final SelenideElement errorMessage = $("[data-testid='error-message']");
 ```
 
 ## Do

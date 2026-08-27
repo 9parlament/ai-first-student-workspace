@@ -1,8 +1,8 @@
 ---
 id: po-fluent
 domain: testing
-adr: 002
 tags: [selenide, pageobject]
+related: [po-locators, po-step, test-negative]
 ---
 # Fluent Page Object
 
@@ -25,3 +25,4 @@ loginPage.openPage()
 
 - `void clickLogin()` без возврата страницы.
 - Assert в PO без `@Step`.
+- Sad path логина через `fillAndSubmitForm` — он ждёт `HomePage`. Чанк `test-negative`.

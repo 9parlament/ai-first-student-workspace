@@ -1,7 +1,7 @@
 ---
 id: test-layers
 domain: testing
-adr: 002
+adr: 005
 tags: [layer, allure, gradle]
 related: [test-pyramid, ci-gradle-args]
 ---
@@ -16,7 +16,7 @@ related: [test-pyramid, ci-gradle-args]
 | e2e | `e2e` | `./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock` |
 | api | `api` | `./gradlew test -Denv=ci -DincludeTags=api` |
 | manual | `manual` | `./gradlew test -Denv=ci -DincludeTags=manual` |
-| harness | `harness` | `./gradlew test -Denv=ci -DincludeTags=harness` |
+| infra | `infra` | `./gradlew test -Denv=ci -DincludeTags=infra` |
 
 Backend / frontend — другие каталоги, не этот `./gradlew`:
 
@@ -38,6 +38,5 @@ Browser smoke в Allure/TestOps — слой **E2E Tests**, не «UI Tests».
 
 ## Don't
 
-- Выдумывать Gradle-task `testE2e`.
 - `@Tag("api")` + `@Tag("e2e")` на одном методе.
-- Считать отсутствие task `testE2e` = «в проекте нет `@Tag("smoke")`». Тег есть; task нет.
+- Путать slice (`smoke` / `screenshot` / `mock`) с `@Layer`. Gradle-task — rule 01, не этот чанк.

@@ -42,7 +42,6 @@ RAG: `cfg-host`, `cfg-stands`, `ci-github-actions`.
 - [ ] Health HTTPS 2xx **или** явный blocked
 - [ ] Gateway `:9821`, не frontend `:9811`
 - [ ] Нет секретов в git и в ответе
-- [ ] Нет commit без OK
 
 ## Example prompt
 

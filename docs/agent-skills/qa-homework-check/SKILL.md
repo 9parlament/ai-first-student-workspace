@@ -33,7 +33,7 @@ RAG: `hw-check-verdict`, `hw-check-ai-first` (и `hw-check-voice`, если фа
 
 ## Авто-незачёт
 
-Простыня skill/rule >250 строк · rule противоречит skill · агент закоммитил сам · `reset --hard` · токен в файле · выдуманный `testE2e` · `@Layer("screenshot")` как ярус (зан. 4).
+Простыня skill/rule >250 строк · rule противоречит skill · агент закоммитил сам · `reset --hard` · токен в файле · выдуманный Gradle-task (rule 01) · `@Layer("screenshot")` как ярус (зан. 4, ADR 005).
 
 ## Example prompt
 
