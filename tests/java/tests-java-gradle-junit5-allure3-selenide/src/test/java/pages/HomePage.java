@@ -103,6 +103,9 @@ public class HomePage extends BasePage<HomePage> {
     public HomePage shouldShowLayoutAndHealth() {
         layout.shouldBe(visible);
         healthStatus.shouldBe(visible);
+        healthStatus.shouldNotHave(text("Checking health"));
+        itemsList.shouldBe(visible);
+        itemsList.shouldNotHave(text("Loading items"));
         return this;
     }
 
