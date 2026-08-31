@@ -1,36 +1,25 @@
 ---
 id: test-negative
 domain: testing
-adr: 009
+adr: 002
 tags: [negative, login]
-related: [po-locators, po-step, cfg-stands, testdata-user]
+related: [po-fluent, testdata-user]
 ---
 # Negative login
 
 **id:** `test-negative`
 
-Канон: `tests/e2e/LoginTests#shouldShowErrorWhenPasswordIsWrong`.
+Канон: `tests/e2e/LoginTests` — методы `shouldShowValidationErrorWhenUsernameIsEmpty`, `…PasswordIsEmpty`, `shouldShowErrorWhenPasswordIsWrong`.
 
-```java
-loginPage.openPage()
-        .typeUsername("user1")
-        .typePassword("wrongpassword")
-        .submitExpectingError()
-        .shouldHaveErrorMessage("Wrong login or password");
-```
-
-Текст ошибки — константа в тесте (`WRONG_CREDENTIALS_MESSAGE`).  
-`fillAndSubmitForm` сюда нельзя: он ждёт `HomePage`, а не сообщение на форме.
-
-Empty username / empty password — те же `type*` + `submitExpectingError`, другие константы в `LoginTests`. Empty username: `typePassword("password1")` — литерал длины, не `UserBuilder` (чанк `testdata-user`).
+Действия через PO (`typeUsername`, `submitExpectingError`), текст ошибки — константа в тесте + `shouldHaveErrorMessage`. Empty username: `typePassword("password1")` — литерал длины, не `UserBuilder`.
 
 ## Do
 
 - Один ожидаемый текст на сценарий.
-- `@Tag("negative")` рядом с `@Tag("e2e")`. Не `@Tag("smoke")` на этот метод.
+- `@Tag("negative")` рядом с `@Tag("e2e")`.
 
 ## Don't
 
 - Inline `$("input")` в negative-тесте.
-- «Invalid credentials» / «Unauthorized» — в UI другая строка.
+- «Починить» селектор, не воспроизведя ошибку трижды (это уже flaky-skill).
 - Собирать `User` для кейса, где пользователя нет (чанк `testdata-user`).

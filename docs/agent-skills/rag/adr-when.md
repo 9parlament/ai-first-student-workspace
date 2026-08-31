@@ -3,7 +3,7 @@ id: adr-when
 domain: testing
 adr: 005
 tags: [adr, rag, skill, rule]
-related: [test-pyramid, test-api-layer, test-negative]
+related: [test-pyramid]
 ---
 # Когда писать ADR
 
@@ -16,7 +16,7 @@ related: [test-pyramid, test-api-layer, test-negative]
 | Откуда факт / якорь / команда? | **RAG** (2–4 чанка) |
 | Почему выбрали A, а не B — надолго? | **ADR** |
 
-ADR пишут, когда решение **дорого откатывать**: ярус vs slice (005), Rest Assured vs e2e на 401 (009), DS header не форк (008). URL из properties — **rule 03**, не ADR.
+ADR пишут, когда решение **дорого откатывать**: ярус vs slice, Rest Assured vs e2e на 401, URL только из properties, не копировать монолитный header.
 
 Не ADR: «в этом тесте опечатка», «поставь JDK 21» (это RAG/rule).
 
@@ -31,13 +31,8 @@ ADR пишут, когда решение **дорого откатывать**:
 RAG: id чанков, которые держат «как», не «почему».
 ```
 
-Канон takeaway:
-
-- логин / wrong password: `docs/adr/009-login-401-is-api.md` — UI-текст e2e, 401 JSON уже api;
-- screenshot: `docs/adr/005-screenshot-not-layer.md` — не `@Layer`;
-- заметка: `docs/adr/006-one-note-not-list.md` (не monorepo `006-allurerc-mjs-ethalon.md`).
-
-Продукт: 007 Spring API-only; 008 DS header не форк. Слои/testid — RAG `be-spring-layers` / `fe-ds-contract`. Факты HTTP — RAG `crud-http`, не ADR.
+Канон курса: `docs/adr/005-screenshot-not-layer.md` — screenshot не `@Layer`.  
+Факты контракта фичи — RAG (пример: `crud-http`); почему takeaway — синглтон/RFC — учебный ADR пака 006, **не** monorepo `docs/adr/006-allurerc-mjs-ethalon.md`.
 
 ## Don't
 

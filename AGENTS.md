@@ -4,14 +4,23 @@
 - Модуль тестов: `tests/java/tests-java-gradle-junit5-allure3-selenide/`.
 - Продукт: backend `docs/agent-skills/be-add-resource/SKILL.md`; frontend `docs/agent-skills/fe-add-ui/SKILL.md`. Не писать Selenide в том же task.
 
+## Ui (браузер на стабе)
+
+```bash
+cd tests/java/tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=mock -DincludeTags=ui -DexcludeTags=screenshot
+```
+
+Compose: `docker compose --profile mock up -d stand-gateway`. Не называть mount на WireMock end-to-end.
+
 ## E2e (default «smoke»)
 
 ```bash
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
-./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot
 ```
 
-Нет Gradle-task `testE2e` (rule 01). Срез занятия = `@Tag("e2e")` минус screenshot/mock. `@Tag("smoke")` — prod slice, не эта команда (ADR 005). App: compose + gateway `:9821`, health `:8800`.
+Нет Gradle-task `testE2e` (rule 01). Срез занятия = `@Tag("e2e")` минус screenshot. `@Tag("smoke")` — prod slice, не эта команда (ADR 005). App: compose + gateway `:9821`, health `:8800`.
 
 ## Ограничения
 

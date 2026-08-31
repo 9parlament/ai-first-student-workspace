@@ -29,6 +29,7 @@ RAG: `ci-github-actions` **или** `ci-jenkins` + `ci-gradle-args`.
 2. Упавший job → команда из лога vs `ci-gradle-args` (env, tags).
 3. Гипотеза в одну строку (нет compose / не тот `-Denv` / тест / секрет).
 4. Правка **одного** слоя: YAML **или** тест **или** vars — не всё сразу (`04-one-task-one-layer`).
+5. Не коммитить без OK.
 
 ## DoD
 

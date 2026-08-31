@@ -8,7 +8,7 @@ description: >-
 # 100% пирамида — план и один шаг
 
 RAG: `test-pyramid`, `test-layers`, `test-api-layer`, `cfg-stands`, `adr-when`.  
-ADR: слот screenshot — `docs/adr/005-screenshot-not-layer.md` (другой промпт); слот login 401 — `docs/adr/009-login-401-is-api.md`. Сначала `qa-coverage-audit`, потом этот план, потом `qa-write-test`.
+ADR: `docs/adr/005-screenshot-not-layer.md` после sync (в паке: `docs/agent-skills/adr/`). Сначала `qa-coverage-audit`, потом этот план, потом `qa-write-test`.
 
 «100%» = продукт закрыт по пирамиде **целиком**, не каждый ярус по 100% и не 100% строк кода. Этот skill закрывает **одну дыру** в общей карте, не «добить слой до 100%».
 
@@ -18,9 +18,10 @@ ADR: слот screenshot — `docs/adr/005-screenshot-not-layer.md` (друго�
 
 ## Do not
 
-- Закрывать api-дыру новым UI-кликом — слот `tests/api` (логин JSON 401 — ADR 009)
-- Вводить `@Layer("screenshot")` — ADR 005, slice не ярус
-- Реализовывать все дыры в одном task — один ярус (rule 04)
+- Добавлять e2e вместо api
+- Называть chrome на стабе e2e
+- Вводить `@Layer("screenshot")`
+- Реализовывать все дыры в одном task (один ярус / один тест)
 
 ## Steps
 
@@ -34,17 +35,15 @@ ADR: слот screenshot — `docs/adr/005-screenshot-not-layer.md` (друго�
 
 | Дыра | Куда |
 |------|------|
-| JSON login 401 | `AuthApiTests`, не новый UI-клик (ADR 009) |
-| `jacocoPendingNoteClasses` (если список вдруг в gradle) | ярус **unit** модуля + снять exclude, не e2e |
-| note-panel без RTL (только если панель в дереве и сценария нет) | component (`HomePage.test`), не Selenide |
-| `/api/note` без Rest Assured | `tests/api`, не новый UI-клик |
-| Текст ошибки на форме | `LoginTests` + PO, уже есть wrong password |
+| JSON login 401 | `AuthApiTests`, не новый UI-клик |
+| Chrome формы / header на стабе | `tests/ui/…`, не `@Layer("e2e")` |
+| Текст ошибки на форме после живого login | `LoginTests` + PO, уже есть wrong password |
 | Чеклист exploratory | `tests/manual`, `@Manual` |
 
 ## DoD
 
 - [ ] План таблицей (дыра → ярус)
-- [ ] Не больше одного яруса без OK
+- [ ] Не больше одного нового теста без OK
 - [ ] Прогон с правильным `-DincludeTags`
 - [ ] Screenshot не назван ярусом
 

@@ -1,7 +1,7 @@
 ---
 id: test-layers
 domain: testing
-adr: 005
+adr: 002
 tags: [layer, allure, gradle]
 related: [test-pyramid, ci-gradle-args]
 ---
@@ -13,7 +13,8 @@ related: [test-pyramid, ci-gradle-args]
 
 | `@Layer` | `@Tag` яруса | Команда (модуль тестов) |
 |----------|--------------|-------------------------|
-| e2e | `e2e` | `./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock` |
+| ui | `ui` | `./gradlew test -Denv=mock -DincludeTags=ui -DexcludeTags=screenshot` |
+| e2e | `e2e` | `./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot` |
 | api | `api` | `./gradlew test -Denv=ci -DincludeTags=api` |
 | manual | `manual` | `./gradlew test -Denv=ci -DincludeTags=manual` |
 | infra | `infra` | `./gradlew test -Denv=ci -DincludeTags=infra` |
@@ -32,11 +33,14 @@ Backend / frontend — другие каталоги, не этот `./gradlew`:
 |--------|--------|
 | `smoke` | узкий прод-срез внутри api/e2e (`HomeTests`, login valid). Локально на занятии **не** заменяет `-DincludeTags=e2e` |
 | `positive` / `negative` | характер кейса |
-| `screenshot` / `mock` | CI slice, тот же `@Layer("e2e")` |
+| `screenshot` | CI slice, `@Layer("ui")` или `@Layer("e2e")` по сценарию |
+| `mock` | CI slice **внутри ui**, не замена `@Tag("ui")` |
 
-Browser smoke в Allure/TestOps — слой **E2E Tests**, не «UI Tests».
+Browser chrome на стабе — слой **UI Tests**. Сквозной путь через живой `/api` — **E2E Tests**.
 
 ## Don't
 
+- Выдумывать Gradle-task `testE2e`.
 - `@Tag("api")` + `@Tag("e2e")` на одном методе.
-- Путать slice (`smoke` / `screenshot` / `mock`) с `@Layer`. Gradle-task — rule 01, не этот чанк.
+- `@Tag("ui")` + `@Tag("e2e")` на одном методе.
+- Считать отсутствие task `testE2e` = «в проекте нет `@Tag("smoke")`». Тег есть; task нет.

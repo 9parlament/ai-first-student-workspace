@@ -40,6 +40,7 @@ Stop на своём билде (красный крестик / Cancel). Не D
 - [ ] Что остановили (run-id / build number)
 - [ ] Свой, не чужой
 - [ ] Подтверждение cancel **или** blocked
+- [ ] Нет commit
 
 ## Example prompt
 

@@ -2,78 +2,71 @@
 name: qa-write-test
 description: >-
   Написать автотест по канону takeaway: слой, PO, tags, Allure.
-  Use when asked to add e2e/api test, cover a scenario, or copy LoginTests.
+  Use when asked to add ui/e2e/api test, cover a scenario, or copy LoginTests.
 ---
 
 # Разработай автотест
 
+RAG (прочитай до кода): `po-fluent`, `po-locators`, `po-step`, `test-negative`, `testdata-user`, `test-taxonomy`, `test-layers`, `cfg-stands`.
+
 ## When
 
-- «напиши e2e на …», «добавь negative login», «покрой API login»
-
-## RAG (2–4 id, не всю папку)
-
-| Задача | Читай |
-|--------|--------|
-| UI / PO | `po-locators` · `po-fluent` · `po-step` |
-| negative login | `po-locators` · `po-step` · `test-negative` · `cfg-stands` |
-| JSON-контракт | `test-api-layer` · `cfg-stands` |
-| сид vs фабрика | `testdata-user` · `cfg-stands` |
-
-Для промпта «неуспешный логин с неправильным паролем» — **вторая строка** (ровно 4).  
-Развилка 401 JSON vs текст на форме — ADR `docs/adr/009-login-401-is-api.md`, не этот skill.
+- «напиши e2e на …», «покрой header на mock», «добавь negative login», «покрой API login»
 
 ## Do not
 
 - CSS/xpath в классе `*Tests`
 - Новый `ChromeDriver` / setup в тесте
-- Подменять `qa-make-full-pyramid` / продукт (`be-add-resource` / `fe-add-ui`)
-- На `main` нет `/api/note` — не выдумывать. **Дыра** — если фича в дереве, а слота нет
-
-Commit, URL в Java, всегда `-Denv`, один task = один ярус — **rule**, не этот файл.  
-Api vs e2e на 401 — **ADR 009**, не решай в чате.
+- E2e на JSON-контракт, если место в `tests/api`
+- `localhost` / prod URL / пароль хаба в Java
+- Деструктивный сценарий на prod без OK / без ADR фичи с фабрикой (`cfg-stands`)
+- Commit без OK
 
 ## Якоря
 
 | Слой | Образец |
 |------|---------|
 | e2e | `tests/e2e/LoginTests`, `pages/LoginPage` (`data-testid`) |
+| ui | `tests/ui/HeaderTests` / `LoginFormTests` — chrome на `-Denv=mock`; header через `BasePage.header` |
 | api | `tests/api/AuthApiTests`, `api/AuthApiClient` |
-| fluent happy | `loginPage.openPage().fillAndSubmitForm("user1", "password1")` — сид, чанк `testdata-user` |
-| fluent negative | `typeUsername` → `typePassword` → `submitExpectingError` (чанк `test-negative`) |
+| fluent e2e | `loginPage.openPage().fillAndSubmitForm("user1", "password1")` — сид литералами, чанк `testdata-user` |
+| fluent ui | `loginPage.openPage().header.shouldHaveLangLabel("EN")` |
 
 ## Steps
 
-1. Один `@Layer`. Логин: текст на форме vs 401 JSON — ADR 009.
-2. Стенды (чанк `cfg-stands`): pipeline / stage / prod? Сиды есть на всех? URL только из config.
-3. Есть PO/клиент? Расширь. Нет — локаторы в `pages/`, не в тесте.
+1. Выбери **один** `@Layer` (чанк `test-layers`). Chrome на стабе — `ui`. Сквозной путь через живой `/api` — `e2e`. JSON-контракт — `api`.
+2. **Стенды (чанк `cfg-stands`):** этот тест поедет на pipeline (`ci`), stage (`stage`) и/или prod (`prod`)? Данные (сиды) есть на всех? Сиды на prod не сносить. Фабрика+teardown на prod — только если ADR фичи. URL только из config. Контракт новой фичи — её RAG, не этот skill.
+3. Есть PO/клиент? Расширь его. Нет — создай локаторы в `pages/` (общий chrome — `pages/components/`), не в тесте.
 4. Класс: `@Layer`, `@Epic`, `@Feature`, `@DisplayName`. Метод: `@Tag` яруса + `positive`/`negative`.
-5. Прогон только этого теста на **pipeline-профиле** (локальный compose):
+5. Прогон только этого теста на профиле слоя (`mock` для ui, `ci` для e2e/api):
 
 ```bash
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
 # e2e
 ./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=LoginTests#<method>
+# ui
+./gradlew test -Denv=mock -DincludeTags=ui -Dtest=HeaderTests#<method>
 # api
 ./gradlew test -Denv=ci -DincludeTags=api -Dtest=AuthApiTests#<method>
 ```
 
-6. В ответе: слой, **на каких стендах поедет**, команда, exit code. Оставшиеся ярусы фичи — **Дыра**, не писать их сейчас.
+6. В ответе: слой, **на каких стендах поедет**, команда, exit code. Не коммитить.
 
 ## DoD
 
 - [ ] Слой выбран явно
-- [ ] Названы стенды: pipeline / stage / prod
+- [ ] Названы стенды: mock / pipeline / stage / prod (что да / нет)
+- [ ] Нет URL и секретов в тесте
 - [ ] Локаторы не в тесте
 - [ ] `@Step` на PO или api-шаги в отчёте
 - [ ] Изолированный Gradle-прогон с `-Denv=ci` (или явно другой env)
-- [ ] Живые дыры фичи названы (не закрыты в этом task)
+- [ ] Нет commit
 
 ## Example prompt
 
 ```text
 Rules ON. Прочитай docs/agent-skills/qa-write-test/SKILL.md
-и чанки po-locators, po-step, test-negative, cfg-stands.
-Добавь автотест на неуспешный логин с неправильным паролем.
-Укажи pipeline/stage/prod.
+и чанки po-fluent, po-step, test-negative, cfg-stands.
+Добавь e2e по образцу LoginTests#shouldShowErrorWhenPasswordIsWrong
+(не дублируй существующий метод). Укажи pipeline/stage/prod. Не коммить.
 ```

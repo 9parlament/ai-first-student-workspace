@@ -1,6 +1,7 @@
 ---
 id: tms-meta
 domain: testing
+adr: 002
 tags: [allure, testops, jira, tms]
 related: [test-taxonomy, test-layers]
 ---
@@ -15,7 +16,8 @@ related: [test-taxonomy, test-layers]
 | `@AllureId("46592")` | стабильный id кейса TestOps | `LoginFormTests` |
 | `@Issue("MUL-2")` | ключ Jira (story/bug) | тот же метод |
 | `@Epic` / `@Feature` | иерархия в Allure = словарь проекта | `Authentication` / `Login` |
-| `@Layer("e2e")` | Test Layer в TestOps = **E2E Tests** | не «UI Tests» |
+| `@Layer("ui")` | Test Layer = **UI Tests** | chrome / mock stand |
+| `@Layer("e2e")` | Test Layer = **E2E Tests** | живой бэкенд |
 | `@Tag("smoke")` | узкий slice, не ярус | `HomeTests`, login valid |
 
 Школьный контур (когда выдадут доступы): TestOps [allure.qa.guru](https://allure.qa.guru) · Jira [jira.qa.guru](https://jira.qa.guru). Пока нет проекта — **не** выдумывать чужие id.

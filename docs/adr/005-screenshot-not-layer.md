@@ -9,10 +9,10 @@
 
 ## Решение
 
-1. Классы `*ScreenshotTests` остаются `@Layer("e2e")`.
-2. Отбор: `@Tag("screenshot")` + `-Denv=mock` или `stage` + job `ui-mock-tests` / stage screenshots.
-3. `@Tag("smoke")` — тоже slice (узкий прод), не ярус.
-4. Mock UI (`-Denv=mock`) — slice, не api-слой.
+1. Классы `*ScreenshotTests` остаются на ярусе сценария: chrome PNG → `@Layer("ui")`, welcome-panel после логина → `@Layer("e2e")`.
+2. Отбор: `@Tag("screenshot")` + `-Denv=mock` или `prod` + job `ui-tests` / `e2e-tests` screenshot step.
+3. `@Tag("smoke")` — тоже slice (узкий прод), не ярус. Gradle-task `testE2e` в takeaway нет.
+4. Mock UI (`-Denv=mock`) — **ярус `ui`**, не api-слой и не e2e. Header / burger / layout chrome — `tests/ui` + `HeaderComponent`. `@Tag("mock")` — slice внутри ui.
 
 ## Последствия
 

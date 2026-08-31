@@ -1,6 +1,7 @@
 ---
 id: base-lifecycle
 domain: testing
+adr: 002
 tags: [testbase, junit]
 ---
 # TestBase lifecycle

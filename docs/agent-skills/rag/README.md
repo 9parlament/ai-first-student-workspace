@@ -9,8 +9,7 @@ Retrieval-единицы **для учебного репо студента**. 
 
 ## Как читать
 
-Один чанк = один `id`. Агент читает **2–4 файла**, не всю папку.  
-Лист A4: [03-rag](https://lab.qa.guru/#03-rag) · карта слоёв: [lab.qa.guru](https://lab.qa.guru/).
+Один чанк = один `id`. Агент читает **2–4 файла**, не всю папку.
 
 | id | Файл | Когда |
 |----|------|--------|
@@ -21,10 +20,10 @@ Retrieval-единицы **для учебного репо студента**. 
 | `testdata-user` | [testdata-user.md](testdata-user.md) | сид `user1` литералами vs `UserBuilder` на register |
 | `po-locators` | [po-locators.md](po-locators.md) | селекторы только в PO |
 | `po-step` | [po-step.md](po-step.md) | `@Step` на методах страницы |
-| `test-negative` | [test-negative.md](test-negative.md) | negative login: `submitExpectingError`, текст ошибки |
+| `test-negative` | [test-negative.md](test-negative.md) | negative login |
 | `test-taxonomy` | [test-taxonomy.md](test-taxonomy.md) | Epic / Feature / Tag |
 | `tms-meta` | [tms-meta.md](tms-meta.md) | `@AllureId` / `@Issue` |
-| `quality-gates` | [quality-gates.md](quality-gates.md) | JaCoCo / Sonar ≠ пирамида; pending exclude не шаблон |
+| `quality-gates` | [quality-gates.md](quality-gates.md) | JaCoCo / Sonar ≠ пирамида |
 | `adr-when` | [adr-when.md](adr-when.md) | rule/skill/RAG vs ADR |
 | `allure-attach` | [allure-attach.md](allure-attach.md) | screenshot / results |
 | `allure-reporting-requirements` | [allure-reporting-requirements.md](allure-reporting-requirements.md) | steps по `@Layer` |
@@ -39,12 +38,8 @@ Retrieval-единицы **для учебного репо студента**. 
 | `hw-check-ai-first` | [hw-check-ai-first.md](hw-check-ai-first.md) | рубрика занятий 2–4 |
 | `hw-check-voice` | [hw-check-voice.md](hw-check-voice.md) | тон комментария к сдаче |
 | `remote-selenoid` | [remote-selenoid.md](remote-selenoid.md) | браузер на хабе |
-| `test-api-layer` | [test-api-layer.md](test-api-layer.md) | Rest Assured; 401 логина — факт, почему не клик — ADR 009 |
+| `test-api-layer` | [test-api-layer.md](test-api-layer.md) | Rest Assured, не Selenide |
 | `crud-http` | [crud-http.md](crud-http.md) | HTTP CRUD: PUT 201/200, PATCH merge-patch; POST только на коллекции (SSOT: monorepo `docs/rag/testing/crud-http.md`) |
 | `base-lifecycle` | [base-lifecycle.md](base-lifecycle.md) | `TestBase` setup/teardown |
-| `be-spring-layers` | [be-spring-layers.md](be-spring-layers.md) | пакеты Spring + Flyway; skill `be-add-resource` |
-| `be-module-tests` | [be-module-tests.md](be-module-tests.md) | unit/slice/integration модуля, JaCoCo 1.0 |
-| `fe-react-layers` | [fe-react-layers.md](fe-react-layers.md) | pages / lib / routes / RTL; skill `fe-add-ui` |
-| `fe-ds-contract` | [fe-ds-contract.md](fe-ds-contract.md) | DS, `data-testid`, `messages.ts` (ADR 008) |
 
 Занятие 2: явный путь к файлу. Занятие 3: зачем 2–4 чанка, не вся папка. Занятие 4: ADR.

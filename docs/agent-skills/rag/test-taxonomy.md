@@ -1,6 +1,7 @@
 ---
 id: test-taxonomy
 domain: testing
+adr: 002
 tags: [allure, epic, feature, tag, tms]
 related: [tms-meta]
 ---
@@ -9,7 +10,8 @@ related: [tms-meta]
 **id:** `test-taxonomy`
 
 Канон на классе `LoginTests`: `@Epic("Authentication")`, `@Feature("Login")`, `@Layer("e2e")`.  
-На методе — `@Tag("e2e")` + `positive` / `negative`. Узкий прод-кейс дополнительно `@Tag("smoke")`.
+`LoginFormTests` / `HeaderTests` (chrome на стабе): `@Layer("ui")`.  
+На методе — `@Tag` яруса (`ui` / `e2e`) + `positive` / `negative`. Узкий прод-кейс дополнительно `@Tag("smoke")`.
 
 TMS (`@AllureId`, `@Issue`) — чанк `tms-meta`. Образец в коде: `LoginFormTests` (`@AllureId("46592")`, `@Issue("MUL-2")`).
 

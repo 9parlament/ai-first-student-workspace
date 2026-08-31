@@ -33,8 +33,8 @@ RAG: `e2e-layers`, `test-pyramid`, `cfg-env-profile`, `cfg-base-url`, `cfg-stand
 | `config/*.properties` + `-Denv` | |
 | профили pipeline / stage / prod (хотя бы ci + prod; stage — заготовка) | |
 | `TestBase` / `ApiTestBase` | |
-| `pages/` с `@Step` | |
-| `tests/e2e` + `tests/api` | |
+| `pages/` с `@Step` + `pages/components/` (общий chrome) | |
+| `tests/ui` + `tests/e2e` + `tests/api` | |
 | `@Layer` + `@Tag` | |
 | Allure results dir | |
 
@@ -47,6 +47,7 @@ RAG: `e2e-layers`, `test-pyramid`, `cfg-env-profile`, `cfg-base-url`, `cfg-stand
 - [ ] Репо не с нуля из чата, а из takeaway/чеклиста
 - [ ] Первый e2e или api прогон с `-Denv`
 - [ ] Таблица слоёв заполнена
+- [ ] Нет commit без OK
 
 ## Example prompt
 

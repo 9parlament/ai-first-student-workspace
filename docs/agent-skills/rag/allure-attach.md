@@ -1,6 +1,7 @@
 ---
 id: allure-attach
 domain: testing
+adr: 002
 tags: [allure, screenshot]
 ---
 # Allure attachments

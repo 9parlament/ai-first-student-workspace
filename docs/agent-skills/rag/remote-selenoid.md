@@ -1,6 +1,7 @@
 ---
 id: remote-selenoid
 domain: testing
+adr: 002
 tags: [selenoid, remote]
 ---
 # Браузер на хабе

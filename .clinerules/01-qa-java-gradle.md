@@ -1,24 +1,44 @@
 ---
 paths:
-  - "tests/java/tests-java-gradle-junit5-allure3-selenide/**"
+  - "**/*Tests.java"
+  - "**/*Test.java"
+  - "**/tests/**"
+  - "**/build.gradle"
 ---
 
-# takeaway — e2e / api defaults
+# takeaway — ui / e2e / api defaults
 
 Модуль: `tests/java/tests-java-gradle-junit5-allure3-selenide/`.
+
+## Ui (браузер на стабе)
+
+```bash
+cd tests/java/tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=mock -DincludeTags=ui -DexcludeTags=screenshot
+```
+
+Не называть mount на WireMock end-to-end. `@Tag("mock")` — slice внутри `ui`, не замена `@Tag("ui")`.
 
 ## E2e (учебный smoke)
 
 ```bash
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
-./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot
 ```
 
-- Нет Gradle-task `testE2e`. Срез занятия = `@Tag("e2e")` минус screenshot/mock.
-- `@Tag("smoke")` на узких методах — prod slice, не замена команды выше (ярус vs slice — ADR 005).
+- Нет Gradle-task `testE2e`. Срез занятия = `@Tag("e2e")` минус screenshot.
+- `@Tag("smoke")` на узких методах — prod slice, не ярус и не замена команды выше.
 - Не `./gradlew test` без `-DincludeTags` для задачи «smoke / e2e».
-- Всегда `-Denv=` (pipeline `ci` / stage / prod). URL в Java — rule 03.
-- Один метод (`-Dtest=`) — skill `qa-write-test` / flaky — `qa-smoke-debug`. Allure — тот же `qa-smoke-debug`.
+- Всегда `-Denv=` (pipeline `ci` / stage / prod). URL не в тестах.
+
+## Один тест
+
+```bash
+./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=HomeTests
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong
+./gradlew test -Denv=mock -DincludeTags=ui -Dtest=HeaderTests
+```
 
 ## API
 
@@ -26,9 +46,10 @@ cd tests/java/tests-java-gradle-junit5-allure3-selenide
 ./gradlew test -Denv=ci -DincludeTags=api
 ```
 
-## Новый продукт без яруса
+## Allure
 
-Эндпоинт / панель в коде, а в этом модуле нет api и/или e2e по слоту — в ответе **Дыра**. Не закрывать unit/JaCoCo отсюда. Пирамида — `qa-make-full-pyramid`, один ярус.
+- Results: `tests/java/tests-java-gradle-junit5-allure3-selenide/build/allure-results`
+- Report: `npx allure serve build/allure-results` (из модуля тестов, после `npm ci`)
 
 ## Skills
 

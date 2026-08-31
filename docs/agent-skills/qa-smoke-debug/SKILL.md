@@ -19,6 +19,9 @@ RAG: `docs/agent-skills/rag/ci-gradle-args.md`, `allure-attach.md`, `cfg-stands.
 ## Do not
 
 - `./gradlew test` без `-DincludeTags=e2e`
+- Chrome на стабе как e2e (`-Denv=mock` / `tests/ui` — ярус **ui**, не этот skill)
+- task `testE2e` (его нет)
+- commit без OK
 - fix без 3 изолированных прогонов
 
 ---
@@ -34,11 +37,11 @@ RAG: `docs/agent-skills/rag/ci-gradle-args.md`, `allure-attach.md`, `cfg-stands.
 
 ## 1. E2e local (учебный smoke)
 
-Срез занятия = `@Tag("e2e")` минус screenshot/mock. Команда — `-DincludeTags` (rule 01).  
+Срез занятия = `@Tag("e2e")` минус screenshot. Gradle-task `testE2e` нет.  
 `@Tag("smoke")` на отдельных методах — узкий **prod slice**, не замена этой команды.
 
 ```bash
-./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot
 ```
 
 Зафиксируй: exit code, `tests run` / `failed`.
@@ -87,6 +90,7 @@ npx allure serve build/allure-results
 - [ ] Exit code записан
 - [ ] `build/allure-results` exists
 - [ ] Flaky: `-Dtest=Class#method` × 3
+- [ ] Нет commit
 
 ---
 

@@ -43,6 +43,7 @@ Build Now на **своём** `{login}-app-tests-…`. Параметры как
 - [ ] Раннер + что именно запустили (весь workflow / failed jobs / один job)
 - [ ] URL нового run/build **или** blocked
 - [ ] Не prod-deploy без OK
+- [ ] Нет commit без просьбы
 
 ## Example prompt
 

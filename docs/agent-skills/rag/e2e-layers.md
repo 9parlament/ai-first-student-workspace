@@ -1,6 +1,7 @@
 ---
 id: e2e-layers
 domain: testing
+adr: 002
 tags: [structure, testbase, pages]
 ---
 # Слои тестового модуля
@@ -14,8 +15,10 @@ tags: [structure, testbase, pages]
 | `config/` | env profiles, typed keys |
 | `api/` | `ApiTestBase`, HTTP-клиенты |
 | `pages/` | Page Objects, локаторы, `@Step` |
+| `pages/components/` | вложенные PO (`HeaderComponent`); шарятся через `BasePage.header` |
 | `helpers/` | `User` / `UserBuilder` / `DataFaker` — throwaway, не сид (чанк `testdata-user`) |
-| `tests/e2e/` | браузерные сценарии, `TestBase` |
+| `tests/ui/` | браузер на stub API (`@Layer("ui")`, `-Denv=mock`) |
+| `tests/e2e/` | браузер через живой `/api` (`@Layer("e2e")`) |
 | `tests/api/` | HTTP-сценарии, `ApiTestBase` |
 | `tests/manual/` | exploratory stubs |
 | `tests/infra/` | helpers (config / HAR / CSS; не слой пирамиды) |

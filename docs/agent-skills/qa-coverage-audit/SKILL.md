@@ -7,7 +7,7 @@ description: >-
 
 # Оцени покрытие
 
-RAG: `test-pyramid`, `test-layers`, `test-taxonomy`, `test-api-layer`, `quality-gates`.
+RAG: `test-pyramid`, `test-layers`, `test-taxonomy`, `test-api-layer`.
 
 ## When
 
@@ -21,31 +21,32 @@ RAG: `test-pyramid`, `test-layers`, `test-taxonomy`, `test-api-layer`, `quality-
 
 ## Steps
 
-1. Inventory: `tests/e2e|api|manual|infra` + `backend/java/backend-java-spring/src/test` + frontend `*.test.tsx`.
+1. Inventory: `tests/ui|e2e|api|manual|infra` + `backend/java/backend-java-spring/src/test` + frontend `*.test.tsx`.
 2. Таблица: класс × `@Layer` × `@Tag` × сценарий (DisplayName).
-3. Flows: login / register / logout / home health+items / auth API. Note (`/api/note`, note-panel) — только если фича в дереве (`develop`; на `main` нет).
-4. Сверить `AuthApiTests` vs `LoginTests` — где дубль, где дыра. Pending-списка в `build.gradle` нет. RTL note-panel — только `develop`.
-5. Screenshot / mock / smoke — **slice**, не недостающий ярус.
+3. Flows: login / register / logout / home health+items / auth API.
+4. Сверить `AuthApiTests` vs `LoginTests` — где дубль, где дыра.
+5. Screenshot / mock / smoke — **slice**, не недостающий ярус. `mock` живёт внутри `ui`.
 6. Дальше (занятие 4): отдельный task `qa-pyramid-plan`. Здесь только audit, без кода.
 
 ## Формат ответа
 
-| Сценарий | unit | cmp | api | e2e | man | Дыра? |
-|----------|:----:|:---:|:---:|:---:|:---:|-------|
-| login valid | | | | | | |
-| login 401 / wrong password | | | | | | |
-| register | | | | | | |
-| home items | | | | | | |
-| note (`/api/note`) | | | | | | n/a на `main`; на `develop` см. дерево |
+| Сценарий | unit | cmp | api | ui | e2e | man | Дыра? |
+|----------|:----:|:---:|:---:|:--:|:---:|:---:|-------|
+| login valid | | | | | | | |
+| login 401 / wrong password | | | | | | | |
+| register | | | | | | | |
+| home items | | | | | | | |
+| login form chrome (mock) | | | | | | | |
+| header lang/theme (mock) | | | | | | | |
 
-Плюс 3 приоритетных пробела (ярус + почему не e2e) **или** явно «дыр нет», если inventory это показывает.
+Плюс 3 приоритетных пробела (ярус + почему не e2e).
 
 ## DoD
 
 - [ ] Inventory не «у нас всё покрыто» без таблицы
 - [ ] Slice ≠ слой
 - [ ] Нет правок кода
-- [ ] 3 приоритета с ярусом, либо явно «дыр нет»
+- [ ] 3 приоритета с ярусом
 
 ## Example prompt
 

@@ -37,6 +37,7 @@ Job `{login}-app-tests-…` на [jenkins.qa.guru](https://jenkins.qa.guru).
 - [ ] Назван раннер (GHA или Jenkins)
 - [ ] Таблица job/build → слой
 - [ ] YAML/job не менялись
+- [ ] Нет commit
 
 ## Example prompt
 

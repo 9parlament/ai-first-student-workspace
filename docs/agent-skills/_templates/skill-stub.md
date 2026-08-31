@@ -30,6 +30,7 @@ description: >-
 - [ ]
 - [ ]
 - [ ]
+- [ ] Нет commit без OK
 
-Имена пака: `qa-smoke-debug` · `qa-write-test` · `qa-review-framework` · `qa-run-stand` · `qa-coverage-audit` · `qa-pyramid-plan` · `qa-make-full-pyramid` · `qa-bootstrap-framework` · `qa-homework-check` · `qa-review-ci` · `qa-create-ci` · `qa-fix-ci` · `qa-run-ci` · `qa-stop-ci` · `qa-pull-takeaway` · `qa-setup-host` · `be-add-resource` · `fe-add-ui`.  
-Живые файлы: `docs/agent-skills/<name>/SKILL.md`.
+Имена пака: `qa-smoke-debug` · `qa-write-test` · `qa-review-framework` · `qa-run-stand` · `qa-coverage-audit` · `qa-pyramid-plan` · `qa-make-full-pyramid` · `qa-bootstrap-framework` · `qa-homework-check` · `qa-review-ci` · `qa-create-ci` · `qa-fix-ci` · `qa-run-ci` · `qa-stop-ci` · `qa-pull-takeaway` · `qa-setup-host`.  
+Эталоны: `docs/agent-skills/examples/multistack/`.

@@ -1,6 +1,7 @@
 ---
 id: ci-github-actions
 domain: config
+adr: 002
 tags: [ci, github-actions]
 related: [ci-gradle-args, cfg-stands, test-pyramid]
 ---
@@ -17,7 +18,7 @@ related: [ci-gradle-args, cfg-stands, test-pyramid]
 ```
 backend-unit-tests → integration-tests → build-backend
 frontend-unit-tests ─┐
-infra-tests ───────┴→ ui-mock-tests → build-frontend
+infra-tests ───────┴→ ui-tests → build-frontend
 infra-tests → api-tests-stage / api-tests / e2e-tests-stage / e2e-tests
 build-* → deploy-backend-stage / deploy-frontend-stage
   → api-tests-stage → e2e-tests-stage
@@ -25,9 +26,9 @@ build-* → deploy-backend-stage / deploy-frontend-stage
 publish-allure-report (всегда собирает артефакты; Pages — soft)
 ```
 
-`infra-tests` = `tests/infra/` (не слой пирамиды). Красный job `infra-tests` не гоняет mock/api/e2e. Не встраивать шагом внутрь api/e2e — там другой `-DincludeTags` и чужой JaCoCo.
+`infra-tests` = `tests/infra/` (не слой пирамиды). Красный job `infra-tests` не гоняет ui/api/e2e. Не встраивать шагом внутрь api/e2e — там другой `-DincludeTags` и чужой JaCoCo.
 
-PR: unit / integration / infra / mock. `build-*` и `deploy-*` — `main` / `workflow_dispatch`.  
+PR: unit / integration / infra / ui. `build-*` и `deploy-*` — `main` / `workflow_dispatch`.  
 Deploy skip, если `DEPLOY_HOST` / `STAGE_HOST` пустые.  
 Pipeline api/e2e (`-Denv=ci`) — локально (`qa-run-stand`), не job CI. Job `api-tests` / `e2e-tests` = **prod** после SSH.
 
@@ -41,7 +42,8 @@ Pipeline api/e2e (`-Denv=ci`) — локально (`qa-run-stand`), не job CI
 | `STAGE_HOST` / `STAGE_USER` / `STAGE_APP_DIR` | SSH stage |
 | `STAGE_COMPOSE_PROJECT` / `STAGE_COMPOSE_ENV_FILE` | stage twin |
 | `secrets.DEPLOY_SSH_KEY` | ключ |
-| `secrets.SELENOID_WEBDRIVER_URL` | хаб с кредами — prod/stage e2e |
+| `secrets.SELENOID_WEBDRIVER_URL` | Selenoid WebDriver `/wd/hub` — Java Selenide / Python Selenium |
+| `secrets.SELENOID_PLAYWRIGHT_URL` | Selenoid Playwright `wss://…` — JS now; later Java/Python Playwright |
 
 В этом файле **нет** TestOps / Telegram / Sonar — это школьный контур позже, не копировать из матрицы.
 

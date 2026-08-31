@@ -12,6 +12,7 @@ paths:
 | Слово | Takeaway | Когда |
 |-------|----------|--------|
 | pipeline (CI / локальный compose) | `-Denv=ci` | разработка, GHA, Jenkins |
+| mock (stub API, ярус **ui**) | `-Denv=mock` | chrome SPA без живого backend |
 | stage | `-Denv=stage` | [https://stage.ai-first.autotests.ai/](https://stage.ai-first.autotests.ai/) |
 | prod | `-Denv=prod` | [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) + Selenoid; креды хаба не в git |
 
