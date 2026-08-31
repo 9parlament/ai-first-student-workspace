@@ -5,12 +5,12 @@
 
 ## Контекст
 
-Один сценарий «неверный пароль» — две поверхности: читаемый текст на форме и HTTP 401 + JSON. В каждом чате хочется второй e2e «на 401» или assert статуса в DOM. Так JSON-контракт закрывают кликом, хотя `AuthApiTests#loginWithInvalidPassword` уже есть.
+Один сценарий «неверный пароль» — две поверхности: читаемый текст на форме и HTTP 401 + JSON. В каждом чате хочется закрыть JSON кликом или assert статуса в DOM. Так контракт закрывают браузером, хотя `AuthApiTests#loginWithInvalidPassword` уже есть.
 
 ## Решение
 
 1. Текст на форме → `LoginTests#shouldShowErrorWhenPasswordIsWrong`, `@Layer("e2e")`.
-2. Контракт 401 + schema → уже `AuthApiTests#loginWithInvalidPassword`, `@Layer("api")`. Новый браузерный тест «на 401» не пишем.
+2. Контракт 401 + schema → уже `AuthApiTests#loginWithInvalidPassword`, `@Layer("api")`. Новый браузерный тест под HTTP-статус не пишем.
 
 ## Последствия
 
