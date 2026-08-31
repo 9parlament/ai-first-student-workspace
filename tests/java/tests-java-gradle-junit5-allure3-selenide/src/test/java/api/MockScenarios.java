@@ -1,6 +1,5 @@
 package api;
 
-import config.ConfigReader;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 
@@ -15,6 +14,10 @@ import static io.restassured.RestAssured.given;
  */
 public final class MockScenarios {
 
+    static {
+        ApiTestBase.useRestAssured();
+    }
+
     private MockScenarios() {
     }
 
@@ -22,7 +25,6 @@ public final class MockScenarios {
     public static boolean available() {
         try {
             int status = given()
-                    .baseUri(ConfigReader.resolveApiBaseUrl())
                     .when()
                     .get("/__admin/scenarios")
                     .statusCode();
@@ -35,7 +37,6 @@ public final class MockScenarios {
     @Step("Mock: switch scenario {scenario} to state {state}")
     public static void setState(String scenario, String state) {
         given()
-                .baseUri(ConfigReader.resolveApiBaseUrl())
                 .contentType(ContentType.JSON)
                 .body(Map.of("state", state))
                 .when()
@@ -47,7 +48,6 @@ public final class MockScenarios {
     @Step("Mock: reset all scenarios")
     public static void resetAll() {
         given()
-                .baseUri(ConfigReader.resolveApiBaseUrl())
                 .when()
                 .post("/__admin/scenarios/reset")
                 .then()

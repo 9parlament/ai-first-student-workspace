@@ -1,4 +1,4 @@
-package tests.e2e;
+package tests.ui;
 
 import tests.TestBase;
 import annotations.Layer;
@@ -10,20 +10,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@Layer("e2e")
+@Layer("ui")
 @Epic("Authentication")
-@Feature("Register form")
+@Feature("Login embed")
 @Severity(SeverityLevel.NORMAL)
-@DisplayName("Register form mount")
-class RegisterFormTests extends TestBase {
+@DisplayName("Login embed")
+class LoginEmbedTests extends TestBase {
 
     @Test
-    @Tag("e2e")
+    @Tag("ui")
     @Tag("mock")
-    @DisplayName("Register form fields and submit are visible")
-    void registerFormIsMounted() {
-        registerPage.openPage()
-                .shouldShowRegisterForm()
-                .shouldHaveFormTitle("Register");
+    @DisplayName("Embedded header is visible on login page")
+    void embeddedHeaderIsVisibleOnLoginPage() {
+        loginPage.openPage()
+                .shouldHaveFormTitle("Login Form")
+                .header.shouldShowEmbeddedHeader();
     }
 }

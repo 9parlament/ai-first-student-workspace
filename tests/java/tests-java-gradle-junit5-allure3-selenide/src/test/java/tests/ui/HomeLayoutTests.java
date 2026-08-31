@@ -1,4 +1,4 @@
-package tests.e2e;
+package tests.ui;
 
 import tests.TestBase;
 import annotations.Layer;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@Layer("e2e")
+@Layer("ui")
 @Epic("Home")
 @Feature("Home layout")
 @Severity(SeverityLevel.NORMAL)
@@ -18,12 +18,12 @@ import org.junit.jupiter.api.Test;
 class HomeLayoutTests extends TestBase {
 
     @Test
-    @Tag("e2e")
+    @Tag("ui")
     @Tag("mock")
     @DisplayName("Home shows embedded header and reference layout")
     void homeLayoutIsMounted() {
         homePage.openPage()
-                .shouldShowEmbeddedHeader()
-                .shouldShowLayout();
+                .shouldShowLayout()
+                .header.shouldShowEmbeddedHeader();
     }
 }

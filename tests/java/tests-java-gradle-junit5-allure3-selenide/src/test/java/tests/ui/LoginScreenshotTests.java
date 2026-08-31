@@ -1,4 +1,4 @@
-package tests.e2e;
+package tests.ui;
 
 import tests.TestBase;
 import annotations.Layer;
@@ -14,17 +14,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.parallel.ResourceAccessMode;
+import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@Layer("e2e")
+@Layer("ui")
 @Severity(SeverityLevel.MINOR)
-@Tag("e2e")
+@Tag("ui")
 @Tag("screenshot")
 @Epic("Authentication")
 @Feature("Login form")
 @Suite("Login")
 @SubSuite("screenshot")
+@ResourceLock(value = "screenshot-compare", mode = ResourceAccessMode.READ_WRITE)
 @Execution(ExecutionMode.SAME_THREAD)
 @DisplayName("Login form screenshot")
 class LoginScreenshotTests extends TestBase {

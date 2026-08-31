@@ -1,4 +1,4 @@
-package tests.e2e;
+package tests.ui;
 
 import annotations.Layer;
 import helpers.ScreenshotHelper;
@@ -13,14 +13,17 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.parallel.ResourceAccessMode;
+import org.junit.jupiter.api.parallel.ResourceLock;
 import tests.TestBase;
 
-@Layer("e2e")
+@Layer("ui")
 @Severity(SeverityLevel.MINOR)
-@Tag("e2e")
+@Tag("ui")
 @Tag("screenshot")
 @Epic("Home")
 @Feature("Home layout")
+@ResourceLock(value = "screenshot-compare", mode = ResourceAccessMode.READ_WRITE)
 @Execution(ExecutionMode.SAME_THREAD)
 @DisplayName("Home layout screenshot")
 class HomeLayoutScreenshotTests extends TestBase {

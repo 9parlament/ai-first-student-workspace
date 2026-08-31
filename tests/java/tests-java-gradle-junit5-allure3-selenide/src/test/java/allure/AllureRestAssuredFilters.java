@@ -2,8 +2,6 @@ package allure;
 
 import config.TestConfig;
 import io.qameta.allure.restassured.AllureRestAssured;
-import io.restassured.RestAssured;
-import io.restassured.filter.Filter;
 
 public final class AllureRestAssuredFilters {
 
@@ -26,17 +24,5 @@ public final class AllureRestAssuredFilters {
             filter.setResponseTemplate(RESPONSE_TEMPLATE);
         }
         return filter;
-    }
-
-    public static void apply(TestConfig config) {
-        if (!isEnabled(config)) {
-            return;
-        }
-        for (Filter filter : RestAssured.filters()) {
-            if (filter instanceof AllureRestAssured) {
-                return;
-            }
-        }
-        RestAssured.filters(create(config));
     }
 }

@@ -1,29 +1,32 @@
-package tests.e2e;
+package tests.ui;
 
 import tests.TestBase;
 import annotations.Layer;
+import io.qameta.allure.AllureId;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@Layer("e2e")
+@Layer("ui")
 @Epic("Authentication")
-@Feature("Login embed")
+@Feature("Login form")
 @Severity(SeverityLevel.NORMAL)
-@DisplayName("Login embed")
-class LoginEmbedTests extends TestBase {
+@DisplayName("Login form mount")
+class LoginFormTests extends TestBase {
 
     @Test
-    @Tag("e2e")
+    @AllureId("46592")
+    @Issue("MUL-2")
+    @Tag("ui")
     @Tag("mock")
-    @DisplayName("Embedded header is visible on login page")
-    void embeddedHeaderIsVisibleOnLoginPage() {
+    @DisplayName("Login form fields and submit are visible")
+    void loginFormIsMounted() {
         loginPage.openPage()
-                .shouldShowEmbeddedHeader()
                 .shouldShowLoginForm()
                 .shouldHaveFormTitle("Login Form");
     }

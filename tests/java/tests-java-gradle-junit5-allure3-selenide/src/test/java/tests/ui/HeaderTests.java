@@ -1,4 +1,4 @@
-package tests.e2e;
+package tests.ui;
 
 import tests.TestBase;
 import annotations.Layer;
@@ -10,53 +10,53 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@Layer("e2e")
+@Layer("ui")
 @Epic("Header")
 @Feature("Lang and theme")
 @Severity(SeverityLevel.NORMAL)
-@DisplayName("Header chrome")
-class HeaderChromeTests extends TestBase {
+@DisplayName("Header")
+class HeaderTests extends TestBase {
 
     @Test
-    @Tag("e2e")
+    @Tag("ui")
     @DisplayName("Login page stays English by default")
     void loginPageStaysEnglishByDefault() {
         loginPage.openPage()
                 .shouldHaveFormTitle("Login Form")
-                .shouldHaveLangLabel("EN")
+                .header.shouldHaveLangLabel("EN")
                 .shouldHaveHtmlLang("en");
     }
 
     @Test
-    @Tag("e2e")
+    @Tag("ui")
     @DisplayName("Theme toggle persists light theme after reload")
     void themeTogglePersistsLightThemeAfterReload() {
         loginPage.openPage()
                 .shouldHaveFormTitle("Login Form")
-                .shouldHaveThemeLight(false)
+                .header.shouldHaveTheme("dark")
                 .clickThemeToggle()
-                .shouldHaveThemeLight(true)
-                .reloadPage()
-                .shouldHaveThemeLight(true);
+                .shouldHaveTheme("light");
+        loginPage.reloadPage()
+                .header.shouldHaveTheme("light");
     }
 
     @Test
-    @Tag("e2e")
+    @Tag("ui")
     @DisplayName("Lang toggle switches login copy to Russian and back")
     void langToggleSwitchesLoginCopyToRussianAndBack() {
         loginPage.openPage()
                 .shouldHaveFormTitle("Login Form")
-                .clickLangToggle()
+                .header.clickLangToggle()
                 .shouldHaveLangLabel("RU")
-                .shouldHaveHtmlLang("ru")
-                .shouldHaveFormTitle("Форма входа")
+                .shouldHaveHtmlLang("ru");
+        loginPage.shouldHaveFormTitle("Форма входа")
                 .reloadPage()
-                .shouldHaveLangLabel("RU")
-                .shouldHaveHtmlLang("ru")
-                .shouldHaveFormTitle("Форма входа")
-                .clickLangToggle()
+                .header.shouldHaveLangLabel("RU")
+                .shouldHaveHtmlLang("ru");
+        loginPage.shouldHaveFormTitle("Форма входа")
+                .header.clickLangToggle()
                 .shouldHaveLangLabel("EN")
-                .shouldHaveHtmlLang("en")
-                .shouldHaveFormTitle("Login Form");
+                .shouldHaveHtmlLang("en");
+        loginPage.shouldHaveFormTitle("Login Form");
     }
 }
