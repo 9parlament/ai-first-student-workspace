@@ -52,14 +52,14 @@ UI: http://localhost:9821/ (не :9811)
 
 4) Учебный e2e (срез = `-DincludeTags`; `@Tag("smoke")` — prod slice, не эта команда):
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
-./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot
 
 5) ДЗ готово только если все пункты ниже истинны. Иначе статус «не сдано» и что чинить — без commit.
    - origin указывает на мой форк, не на qa-guru
    - текущая ветка = main
    - health :8800 → HTTP 2xx
    - UI открывается с gateway :9821
-   - Gradle-команда ровно с -Denv=ci и -DincludeTags=e2e -DexcludeTags=screenshot,mock
+   - Gradle-команда ровно с -Denv=ci и -DincludeTags=e2e -DexcludeTags=screenshot
    - exit code = 0, failed = 0
    - каталог tests/java/tests-java-gradle-junit5-allure3-selenide/build/allure-results не пустой
    - в git нет нового commit / push
@@ -74,7 +74,7 @@ cd tests/java/tests-java-gradle-junit5-allure3-selenide
 - UI: http://localhost:9821/
 - Команда:
   cd tests/java/tests-java-gradle-junit5-allure3-selenide
-  ./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+  ./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot
 - Exit code: <N>
 - Tests: run=<N> failed=<N>
 - Allure results: tests/java/tests-java-gradle-junit5-allure3-selenide/build/allure-results

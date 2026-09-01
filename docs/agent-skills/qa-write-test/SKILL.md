@@ -7,7 +7,8 @@ description: >-
 
 # Разработай автотест
 
-RAG (прочитай до кода): `po-fluent`, `po-locators`, `po-step`, `test-negative`, `testdata-user`, `test-taxonomy`, `test-layers`, `cfg-stands`.
+RAG (прочитай до кода): `coverage-access`, `po-fluent`, `po-locators`, `po-step`, `test-negative`, `testdata-user`, `test-taxonomy`, `test-layers`, `cfg-stands`.
+Профиль: `docs/coverage-profile.md`. Ярус без `write` → STOP.
 
 ## When
 
@@ -17,7 +18,8 @@ RAG (прочитай до кода): `po-fluent`, `po-locators`, `po-step`, `te
 
 - CSS/xpath в классе `*Tests`
 - Новый `ChromeDriver` / setup в тесте
-- E2e на JSON-контракт, если место в `tests/api`
+- E2e на JSON-контракт, если место в `tests/api` (и api `write`)
+- Ярус / модуль, которого нет в профиле как `write`
 - `localhost` / prod URL / пароль хаба в Java
 - Деструктивный сценарий на prod без OK / без ADR фичи с фабрикой (`cfg-stands`)
 - Commit без OK
@@ -34,11 +36,12 @@ RAG (прочитай до кода): `po-fluent`, `po-locators`, `po-step`, `te
 
 ## Steps
 
-1. Выбери **один** `@Layer` (чанк `test-layers`). Chrome на стабе — `ui`. Сквозной путь через живой `/api` — `e2e`. JSON-контракт — `api`.
-2. **Стенды (чанк `cfg-stands`):** этот тест поедет на pipeline (`ci`), stage (`stage`) и/или prod (`prod`)? Данные (сиды) есть на всех? Сиды на prod не сносить. Фабрика+teardown на prod — только если ADR фичи. URL только из config. Контракт новой фичи — её RAG, не этот skill.
-3. Есть PO/клиент? Расширь его. Нет — создай локаторы в `pages/` (общий chrome — `pages/components/`), не в тесте.
-4. Класс: `@Layer`, `@Epic`, `@Feature`, `@DisplayName`. Метод: `@Tag` яруса + `positive`/`negative`.
-5. Прогон только этого теста на профиле слоя (`mock` для ui, `ci` для e2e/api):
+1. `docs/coverage-profile.md`: выбранный `@Layer` = `write`? Нет → STOP, назови компенсацию из `coverage-access`. Модуль и стек — из профиля, не хардкод takeaway, если профиль другой.
+2. Выбери **один** `@Layer` (чанк `test-layers`). Chrome на стабе — `ui`. Сквозной путь через живой `/api` — `e2e`. JSON-контракт — `api`.
+3. **Стенды (чанк `cfg-stands`):** этот тест поедет на pipeline (`ci`), stage (`stage`) и/или prod (`prod`)? Данные (сиды) есть на всех? Сиды на prod не сносить. Фабрика+teardown на prod — только если ADR фичи. URL только из config. Контракт новой фичи — её RAG, не этот skill.
+4. Есть PO/клиент? Расширь его. Нет — создай локаторы в `pages/` (общий chrome — `pages/components/`), не в тесте.
+5. Класс: `@Layer`, `@Epic`, `@Feature`, `@DisplayName`. Метод: `@Tag` яруса + `positive`/`negative`.
+6. Прогон только этого теста на профиле слоя (`mock` для ui, `ci` для e2e/api) — команды якоря **своего** модуля:
 
 ```bash
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
@@ -50,11 +53,11 @@ cd tests/java/tests-java-gradle-junit5-allure3-selenide
 ./gradlew test -Denv=ci -DincludeTags=api -Dtest=AuthApiTests#<method>
 ```
 
-6. В ответе: слой, **на каких стендах поедет**, команда, exit code. Не коммитить.
+7. В ответе: слой, стек/модуль профиля, **на каких стендах поедет**, команда, exit code. Не коммитить.
 
 ## DoD
 
-- [ ] Слой выбран явно
+- [ ] Слой выбран явно; в профиле `write`; стек/модуль названы
 - [ ] Названы стенды: mock / pipeline / stage / prod (что да / нет)
 - [ ] Нет URL и секретов в тесте
 - [ ] Локаторы не в тесте
@@ -65,8 +68,8 @@ cd tests/java/tests-java-gradle-junit5-allure3-selenide
 ## Example prompt
 
 ```text
-Rules ON. Прочитай docs/agent-skills/qa-write-test/SKILL.md
-и чанки po-fluent, po-step, test-negative, cfg-stands.
+Rules ON. Прочитай docs/agent-skills/qa-write-test/SKILL.md,
+docs/coverage-profile.md и чанки coverage-access, po-fluent, po-step, test-negative, cfg-stands.
 Добавь e2e по образцу LoginTests#shouldShowErrorWhenPasswordIsWrong
 (не дублируй существующий метод). Укажи pipeline/stage/prod. Не коммить.
 ```

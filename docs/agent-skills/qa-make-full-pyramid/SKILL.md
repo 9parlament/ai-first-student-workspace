@@ -11,7 +11,7 @@ description: >-
 `qa-coverage-audit` (карта), `qa-pyramid-plan` (план + одна дыра продукта),
 `qa-write-test` (как писать api/ui/e2e).
 
-«100% пирамиды» = каждый сценарий фичи на **своём** `@Layer` (RAG `test-pyramid`).
+«100% пирамиды» = каждый сценарий фичи на **своём** `@Layer` **из write-ярусов профиля** (RAG `test-pyramid`, `coverage-access`).
 Не 100% строк JaCoCo (`quality-gates`). Не e2e на все глаголы. Slice ≠ слой.
 
 Контракт HTTP фичи — её RAG (CRUD: `crud-http`). Не копировать таблицу глаголов сюда.
@@ -30,11 +30,13 @@ description: >-
 - Выдумывать контракт (не читая RAG фичи)
 - `localhost` / prod URL в Java
 - Чинить чужие тесты «заодно»
+- Кодить ярус с `access: none`
 - Commit без OK
 
 ## RAG (на вызов — 2–4 id, не все сразу)
 
-Каталог: `test-pyramid` · `test-layers` · `test-api-layer` · `cfg-stands` · `adr-when` · `quality-gates` + **RAG фичи**.
+Каталог: `coverage-access` · `test-pyramid` · `test-layers` · `test-api-layer` · `cfg-stands` · `adr-when` · `quality-gates` + **RAG фичи**.
+Профиль: `docs/coverage-profile.md`. Ярус `none` — пропустить, не кодить.
 
 | Ярус | Читать |
 |------|--------|
@@ -62,13 +64,13 @@ description: >-
 
 Изолированно: тот же `-Denv` / tags + `-Dtest=Class#method` (api/ui/e2e) или точечный класс backend/Vitest.
 
-Порядок ярусов, если человек не назвал: **unit → integration → component → api → ui → e2e → manual**.
+Порядок ярусов, если человек не назвал: **unit → integration → component → api → ui → e2e → manual**, пропуская `access: none`.
 
 ## Steps
 
 1. Фича влита? Нет → STOP. Не кодить продукт.
-2. Ярус = тот, что назвал человек, иначе первый пустой в порядке выше. Rule: один task = один `@Layer`.
-3. Прочитай **этот** SKILL и **2–4** RAG из таблицы яруса (включая RAG фичи).
+2. Ярус = тот, что назвал человек, иначе первый пустой **write** в порядке выше. Rule: один task = один `@Layer` = один стек профиля.
+3. Прочитай **этот** SKILL, `docs/coverage-profile.md` и **2–4** RAG из таблицы яруса (включая RAG фичи + `coverage-access` если ярус спорный).
 4. Api/ui/e2e — пиши по `qa-write-test`. Unit/integration/component/manual — по якорю слоя.
 5. Стенды: `cfg-stands`. Разрушение на prod — сиды нельзя; фабрика — только если ADR фичи (в RAG фичи).
 6. Прогон **только этого** яруса (команда из таблицы, лучше точечный `-Dtest`).
@@ -78,7 +80,7 @@ description: >-
 ## DoD
 
 - [ ] Фича уже влита (этот skill её не писал)
-- [ ] Ровно один `@Layer`; slice не назван ярусом
+- [ ] Ровно один `@Layer` с `write` в профиле; slice не назван ярусом
 - [ ] 2–4 RAG, не вся папка; контракт из RAG фичи
 - [ ] Стенды названы (`cfg-stands`)
 - [ ] Прогон яруса; exit code в ответе
@@ -89,7 +91,8 @@ description: >-
 ## Example prompt
 
 ```text
-Rules ON. Прочитай docs/agent-skills/qa-make-full-pyramid/SKILL.md
-и 2–4 RAG текущего яруса (для HTTP CRUD — crud-http). Фича уже влита.
+Rules ON. Прочитай docs/agent-skills/qa-make-full-pyramid/SKILL.md,
+docs/coverage-profile.md и 2–4 RAG текущего яруса (для HTTP CRUD — crud-http;
+спорный ярус — coverage-access). Фича уже влита.
 Ярус: unit. По якорю ItemServiceTest. Не коммить. После яруса STOP.
 ```

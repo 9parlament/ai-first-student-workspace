@@ -14,6 +14,7 @@ Retrieval-единицы **для учебного репо студента**. 
 | id | Файл | Когда |
 |----|------|--------|
 | `test-pyramid` | [test-pyramid.md](test-pyramid.md) | какой ярус, не путать slice |
+| `coverage-access` | [coverage-access.md](coverage-access.md) | какие ярусы `write`; стек на ярусе |
 | `test-layers` | [test-layers.md](test-layers.md) | `@Layer` → Gradle `-DincludeTags` |
 | `e2e-layers` | [e2e-layers.md](e2e-layers.md) | config / TestBase / pages / tests |
 | `po-fluent` | [po-fluent.md](po-fluent.md) | цепочка PO, `return this` |

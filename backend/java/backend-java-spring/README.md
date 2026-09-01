@@ -23,8 +23,7 @@ behavioral tests; entity plumbing is executed by the persistence slice, not by r
 
 ## Contract
 
-`service` in `/api/health` equals this module id and must match `health_service` in
-[`deploy/matrix.yaml`](../../../deploy/matrix.yaml).
+`service` in `/api/health` equals this module id (`spring.application.name` в `src/main/resources/application.yml`). Контракт: [`_contract/openapi.yaml`](../../../_contract/openapi.yaml).
 
 | Method | Path | Auth | Success | Body |
 |--------|------|------|---------|------|
@@ -67,4 +66,4 @@ dev.multistack.app/
 **API-only.** Controllers expose `/api/**`; UI lives in `frontend/*` nginx containers.
 CSRF is disabled by design — auth is stateless Bearer JWT, no ambient cookie credential.
 
-Kotlin twin: [`../../kotlin/backend-kotlin-spring/`](../../kotlin/backend-kotlin-spring/).
+Kotlin / другие стеки матрицы — в monorepo курса, не в этом takeaway.

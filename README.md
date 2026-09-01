@@ -44,7 +44,10 @@ Tests (gateway already up):
 
 ```bash
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
-./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+# e2e — живой бэкенд (compose default)
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot
+# ui — браузер на stub API (`docker compose --profile mock up -d stand-gateway`)
+./gradlew test -Denv=mock -DincludeTags=ui -DexcludeTags=screenshot
 ```
 
 CI: `.github/workflows/ci.yml` (same bytes as the clone; stack knobs in `env:`).  

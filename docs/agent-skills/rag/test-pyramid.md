@@ -3,6 +3,7 @@ id: test-pyramid
 domain: testing
 adr: 005
 tags: [pyramid, layer, slice]
+related: [test-layers, coverage-access]
 ---
 # Пирамида (takeaway)
 
@@ -45,3 +46,4 @@ Prod: узкий `@Tag("smoke")` + Selenoid. Оба — **не** новые `@La
 - Закрывать api-контракт только e2e.
 - Писать e2e там, где хватает `AuthApiTests`.
 - Путать JaCoCo (строки backend unit) с покрытием сценариев пирамиды.
+- Предлагать ярус с `access: none` (чанк `coverage-access`, файл `docs/coverage-profile.md`).

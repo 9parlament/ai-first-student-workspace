@@ -7,8 +7,9 @@ description: >-
 
 # 100% пирамида — план и один шаг
 
-RAG: `test-pyramid`, `test-layers`, `test-api-layer`, `cfg-stands`, `adr-when`.  
-ADR: `docs/adr/005-screenshot-not-layer.md` после sync (в паке: `docs/agent-skills/adr/`). Сначала `qa-coverage-audit`, потом этот план, потом `qa-write-test`.
+RAG: `coverage-access`, `test-pyramid`, `test-layers`, `test-api-layer`, `cfg-stands`, `adr-when`.  
+ADR: `docs/adr/005-screenshot-not-layer.md`, `docs/adr/010-coverage-access-not-full-pyramid.md`. Сначала `qa-coverage-audit`, потом этот план, потом `qa-write-test`.  
+Профиль: `docs/coverage-profile.md` — дыра только на `write`.
 
 «100%» = продукт закрыт по пирамиде **целиком**, не каждый ярус по 100% и не 100% строк кода. Этот skill закрывает **одну дыру** в общей карте, не «добить слой до 100%».
 
@@ -21,12 +22,13 @@ ADR: `docs/adr/005-screenshot-not-layer.md` после sync (в паке: `docs/
 - Добавлять e2e вместо api
 - Называть chrome на стабе e2e
 - Вводить `@Layer("screenshot")`
-- Реализовывать все дыры в одном task (один ярус / один тест)
+- Реализовывать все дыры в одном task (один ярус / один стек / один тест)
+- Предлагать ярус с `access: none`
 
 ## Steps
 
-1. Возьми таблицу из `qa-coverage-audit` (или собери коротко).
-2. План: для каждой дыры — ярус + класс-якорь + **на каких стендах** (pipeline / stage / prod).
+1. Возьми таблицу из `qa-coverage-audit` (или собери коротко) и `docs/coverage-profile.md`.
+2. План: для каждой **write**-дыры — ярус + стек/модуль профиля + класс-якорь + **стенды** (pipeline / stage / prod). `none` — компенсация из `coverage-access`, не пункт плана.
 3. Согласуй с человеком **одну** реализацию.
 4. Пиши по `qa-write-test` (PO/api-клиент, tags).
 5. Прогон только этого слоя.
@@ -42,7 +44,8 @@ ADR: `docs/adr/005-screenshot-not-layer.md` после sync (в паке: `docs/
 
 ## DoD
 
-- [ ] План таблицей (дыра → ярус)
+- [ ] План таблицей (дыра → ярус → стек профиля)
+- [ ] Нет пунктов на `access: none`
 - [ ] Не больше одного нового теста без OK
 - [ ] Прогон с правильным `-DincludeTags`
 - [ ] Screenshot не назван ярусом
@@ -50,7 +53,8 @@ ADR: `docs/adr/005-screenshot-not-layer.md` после sync (в паке: `docs/
 ## Example prompt
 
 ```text
-Прочитай docs/agent-skills/qa-pyramid-plan/SKILL.md и test-pyramid.
-План пирамиды по takeaway. Реализуй только если я скажу какой ярус.
+Прочитай docs/agent-skills/qa-pyramid-plan/SKILL.md,
+coverage-access и docs/coverage-profile.md.
+План пирамиды по write-ярусам. Реализуй только если я скажу какой ярус.
 Не коммить.
 ```

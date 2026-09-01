@@ -15,7 +15,7 @@
 | RAG | `docs/agent-skills/rag/<id>.md` | факты (2–4 файла на задачу) |
 | ADR | `docs/adr/` + цитата в skill | почему (занятие 4) |
 
-Листы A4: [lab.qa.guru](https://lab.qa.guru/) — общая карта, по слою, стеки наращивания, login A/B, абляция, лаборатория ([36](https://lab.qa.guru/36-login-lab.html)), ДЗ ([40](https://lab.qa.guru/#40-homework)), словарь ([50](https://lab.qa.guru/50-glossary.html)).
+Листы A4: [lab.qa.guru](https://lab.qa.guru/) — общая карта, по слою, стеки наращивания, login A/B, абляция, лаборатория ([36](https://lab.qa.guru/36-login-lab.html) — тумблеры Skill/Rule/RAG; сценарий пока e2e; ярусы доступа — `docs/coverage-profile.md`), ДЗ ([40](https://lab.qa.guru/#40-homework)), словарь ([50](https://lab.qa.guru/50-glossary.html)).
 
 ## Skills
 
@@ -42,6 +42,7 @@
 
 CI: глагол в skill (`review`/`create`/`fix`/`run`/`stop`), раннер в RAG (`ci-github-actions` / `ci-jenkins`). `qa-run-ci` ≠ `qa-run-stand`.  
 `qa-make-full-pyramid` ≠ `qa-pyramid-plan` (план + одна дыра) и ≠ `qa-write-test` (один автотест): один вызов = один ярус уже влитой фичи, потом STOP. Контракт фичи — RAG (HTTP CRUD: `crud-http`), не таблица в generic skill.  
+Поверхность (какие ярусы `write`, какой стек на ярусе) — `docs/coverage-profile.md` + RAG `coverage-access`, не cartesian в matrix.  
 Не skill: TMS (`test-taxonomy` / `tms-meta`), JaCoCo/Sonar (`quality-gates`). Хост ≠ stand.
 
 ## Rules (example)
@@ -53,6 +54,9 @@ CI: глагол в skill (`review`/`create`/`fix`/`run`/`stop`), раннер �
 | [03-env-and-stand.md](examples/multistack/clinerules/03-env-and-stand.md) | pipeline / mock(ui) / stage / prod, всегда `-Denv` |
 | [04-one-task-one-layer.md](examples/multistack/clinerules/04-one-task-one-layer.md) | один task = один ярус |
 | [05-homework-check.md](examples/multistack/clinerules/05-homework-check.md) | self-check ДЗ: таблица + статус, без commit |
+| [08-coverage-access.md](examples/multistack/clinerules/08-coverage-access.md) | не кодить ярус `access: none`; стек из профиля |
+
+Takeaway 06–07 — product (backend / frontend), не этот пакет numbered-gap. Профиль: [coverage-profile.md](examples/multistack/coverage-profile.md) → в репо `docs/coverage-profile.md`. ADR [010](adr/010-coverage-access-not-full-pyramid.md).
 
 ## Команды ярусов (канон takeaway)
 
@@ -67,4 +71,4 @@ cd tests/java/tests-java-gradle-junit5-allure3-selenide
 Gradle-task `testE2e` **нет**. `@Tag("smoke")` есть на узких методах — **prod slice**, не ярус. На занятии срез e2e = тег `e2e` минус screenshot. Chrome на стабе — ярус `ui`, не e2e.
 
 CI: `.github/workflows/ci.yml`. Прод: [https://ai-first.autotests.ai/](https://ai-first.autotests.ai/) (`-Denv=prod`), не матрица `/stack/…`.  
-ADR курса (takeaway `docs/adr/`): [adr/005-screenshot-not-layer.md](adr/005-screenshot-not-layer.md), [adr/006-one-note-not-list.md](adr/006-one-note-not-list.md) (HTTP — RAG [`crud-http`](rag/crud-http.md), SSOT monorepo `docs/rag/testing/crud-http.md`). Не путать с monorepo `docs/adr/005-testing-pyramid-review.md` / `006-allurerc-mjs-ethalon.md`. Проверяльщик школы (преподаватель): monorepo ADR 014 + skill `qa-homework-check`.
+ADR курса (takeaway `docs/adr/`): [adr/005-screenshot-not-layer.md](adr/005-screenshot-not-layer.md), [adr/006-one-note-not-list.md](adr/006-one-note-not-list.md), [adr/010-coverage-access-not-full-pyramid.md](adr/010-coverage-access-not-full-pyramid.md) (HTTP — RAG [`crud-http`](rag/crud-http.md), SSOT monorepo `docs/rag/testing/crud-http.md`). Не путать с monorepo `docs/adr/005-testing-pyramid-review.md` / `006-allurerc-mjs-ethalon.md`. Проверяльщик школы (преподаватель): monorepo ADR 014 + skill `qa-homework-check`.

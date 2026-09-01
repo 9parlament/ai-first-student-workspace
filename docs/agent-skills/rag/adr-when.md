@@ -3,7 +3,7 @@ id: adr-when
 domain: testing
 adr: 005
 tags: [adr, rag, skill, rule]
-related: [test-pyramid]
+related: [test-pyramid, coverage-access]
 ---
 # Когда писать ADR
 
@@ -16,7 +16,7 @@ related: [test-pyramid]
 | Откуда факт / якорь / команда? | **RAG** (2–4 чанка) |
 | Почему выбрали A, а не B — надолго? | **ADR** |
 
-ADR пишут, когда решение **дорого откатывать**: ярус vs slice, Rest Assured vs клик по JSON, URL только из properties, не копировать монолитный header.
+ADR пишут, когда решение **дорого откатывать**: ярус vs slice, Rest Assured vs клик по JSON, URL только из properties, не копировать монолитный header, полная пирамида vs `coverage-profile`.
 
 Не ADR: «в этом тесте опечатка», «поставь JDK 21» (это RAG/rule).
 
@@ -32,6 +32,7 @@ RAG: id чанков, которые держат «как», не «почем�
 ```
 
 Канон курса: `docs/adr/005-screenshot-not-layer.md` — screenshot не `@Layer`.  
+Поверхность автоматизации: `docs/adr/010-coverage-access-not-full-pyramid.md` + чанк `coverage-access`.  
 Факты контракта фичи — RAG (пример: `crud-http`); почему takeaway — синглтон/RFC — учебный ADR пака 006, **не** monorepo `docs/adr/006-allurerc-mjs-ethalon.md`.
 
 ## Don't
